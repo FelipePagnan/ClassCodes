@@ -1,0 +1,57 @@
+﻿@using GerenciadordeBiblioteca.Models.Enum
+@model Livro
+
+
+@if (TempData["Erro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Erro"]
+    </div>
+}
+
+<form asp-action="Editar" asp-controller="Biblioteca" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Titulo</label>
+        <input type="text" class="form-control" asp-for="Titulo" placeholder="Digite o titulo">
+        <span asp-validation-for="Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Autor</label>
+        <input type="text" class="form-control" asp-for="Autor" placeholder="Digite o Autor">
+        <span asp-validation-for="Autor" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>ISBN</label>
+        <input type="text" class="form-control" asp-for="ISBN" placeholder="Digite o ISBN">
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Ano de publicacao</label>
+        <input type="number" class="form-control" asp-for="AnoPublicacao">
+        <span asp-validation-for="AnoPublicacao" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Nota do livro(0 a 10)</label>
+        <select class="form-select" asp-for="NotaDoLivro">
+            @foreach (var nota in Enum.GetValues(typeof(Nota)))
+            {
+                if ((Model?.NotaDoLivro == (Nota)nota))
+                {
+                    <option selected value="@nota">@nota</option>
+                }
+                else
+                {
+                    <option value="@nota">@nota</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="NotaDoLivro" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>

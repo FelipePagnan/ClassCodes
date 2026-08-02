@@ -1,0 +1,71 @@
+								O que é o HTTP
+
+° HTTP (hypertext Transfer Protocol) é um protocolo de comunicação baseado em texto que segue o modelo cliente-servidor
+° Facilita a troca de informações entre dispositivos na web
+
+Métodos HTTP
+
+° GET
+ - Recupera informações dos servidor.
+ - Exemplo: acessar uma pagina web.
+
+° PUT
+ - Atualiza dados do servidor.
+ - Exemplo: Editar perfil do usuário.
+
+° POST
+ - Envia dados ao servidor para criação ou processamento.
+ - Exemplo: envio de formulários.
+
+° DELETE
+ - Remove dados do servidor
+ - Exemplo: Deletar um comentário em uma postagem.
+
+
+HTTP status codes
+
+°200
+ -200: Sucesso
+ -201: Created
+ -204: No Content
+
+°400
+ -400: Bad Request (servidor não pode processar)
+ -401: Unauthotized
+ -403: forbidden (autorizar o recurso solicitado)
+ -404: Not Found (URL não encontrada)
+
+°500
+ -500: Internal Server (erro no servidor)
+ -503: Service Unavailable (servidor n ta pronto)
+ -504: Gateway Timeout 
+
+
+								Padrão MVC no ASP.NET
+
+ O que é
+
+- Um padrão arquitetural é uma forma de organizar e estruturar sistemas de software para resolver problemas comuns de maneira eficiente. Ele define como as pastes do sistema devem ser organizadas e trabalhar juntas, ajudando a tornar o software mais fácil de entender, manter e expandir
+
+ Padrão MVC
+
+- O padrão MVC (Model-View-Controller) é uma arquitetura de software amplamente adotada, especialmente no desenvolvimento de aplicações web, devido à sua capacidade de organizar o código de maneira eficiente e modular.
+A principal característica do MVC é a separação de aplicação em três componentes principais, cada um com uma responsabilidade bem definida:
+
+CONTROLLER:
+O Controller é o componente intermediário entre a View e o Model. Ele é responsável por processar as requisições feitas pelo usuário (como acessar uma pagina ou enviar um formulário), interagir com o Model para obter ou modificar dados, e finalmente escolher qual a view será exibida
+
+MODEL:
+O Model é o componente responsável por gerenciar a logica de negócios e os dados da aplicação. Ele representa os dados que a aplicação manipula e a lógica que os acompanha;
+
+VIEW:
+A View é a camada responsável por exibi os dados ao usuário. Ela define a interface com o usuário, ou seja, o que o usuário vê na tela.
+
+Por que usar o padrão MVC
+
+- Separação de responsavilidades: Cada componente tem um papel bem definido, o que facilita a manutenção e a evolução do código
+- Testabilidade: A logica de negócios é separada da interface, tornando os testes unitários mais simples.
+- Reutilização de código: O modelo pode ser reutilizado em diferentes partes da aplicação.
+- Facilidade de colaboração: Times podem trabalhar simultaneamente em diferentes camadas da aplicação (front-end e back-end).
+
+

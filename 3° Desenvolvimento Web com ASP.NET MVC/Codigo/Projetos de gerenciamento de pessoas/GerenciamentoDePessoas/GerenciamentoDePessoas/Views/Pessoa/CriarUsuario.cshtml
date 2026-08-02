@@ -1,0 +1,36 @@
+﻿@model Pessoa
+
+<h1>Criar Usuario</h1>
+
+<form asp-action="CriarUsuario" asp-controller="Pessoa" method="post">
+    <label>Nome:</label>
+    <input type="text" asp-for="Nome" />    
+    <span asp-validation-for="Nome" style="color:red"></span>
+
+    <label>Sobrenome:</label>
+    <input type="text" asp-for="Sobrenome" />
+    <span asp-validation-for="Sobrenome" style="color:red"></span>
+
+    <label>DataNascimento:</label>
+    <input type="date" asp-for="DataNascimento" />
+    <span asp-validation-for="DataNascimento" style="color:red"></span>
+
+    <br />
+    <button type="submit">Cadastrar</button>
+</form>
+
+@* @using (Html.BeginForm("CriarUsuario", "Pessoa", FormMethod.Post))
+{
+    <div>
+        @Html.LabelFor(Model => Model.Nome)
+        @Html.TextBoxFor(Model => Model.Nome)
+    </div>
+    <div>
+        @Html.LabelFor(Model => Model.Sobrenome)
+        @Html.TextBoxFor(Model => Model.Sobrenome)
+    </div>
+    <br />
+    <button type="submit"> Cadastrar</button>
+}
+
+@Html.ActionLink("Tela de Inicio", "index", "Home"); *@

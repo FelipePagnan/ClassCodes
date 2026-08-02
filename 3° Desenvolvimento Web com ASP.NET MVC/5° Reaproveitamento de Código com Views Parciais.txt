@@ -1,0 +1,10 @@
+Características principais
+- São chamadas a partir de uma View principal ou diretamente no Controller.
+- Não possuem layout próprio (por padrão, não renderizem a _Layout.cshtml).
+- Recomendadas para partes de UI que precisam ser reutilizadas em várias páginas ou componentes.
+
+Quando usar Views Parciais?
+- Reuso de código: Você tem Seções comuns de UI, como menus, rodapés ou cabeçalhos.
+- Modularidade: Quer dividir páginas grandes em pequenos componentes para facilitar a organização e manutenção do código.
+- Desempenho: Renderizar apenas partes específicas da página ao invés de recarregá-la completamente (Usando técnicas como AJAX).
+

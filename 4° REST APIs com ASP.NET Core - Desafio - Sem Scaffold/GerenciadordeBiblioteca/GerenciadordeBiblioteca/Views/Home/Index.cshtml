@@ -1,0 +1,23 @@
+﻿@model List<string>
+
+@{
+     ViewData["Title"] = "Início";
+}
+<partial name="Partial/_BoasVindas"></partial>
+<partial name="Partial/_Carrossel" model="Model"></partial>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center mt-5">
+        <h4>Ver total de livros cadastrados na plataforma.</h4>
+        <button id="buscarTotalLivros" class="btn btn-primary">Buscar</button>
+        <p id="resultado" style="margin-top: 10px;"></p>
+
+        <h3>Busca rápida de livro</h3>
+        <div class="input-group mb-3">
+            <input id="termoBuscaLivro" type="text" class="form-control" placeholder="Digite o título do livro">
+            <button id="botaoBuscaLivro" class="btn btn-primary" type="button">Buscar</button>
+        </div>
+        <ul id="resultadoLivro" class="list-group mt-3"></ul>
+    </div>
+}

@@ -1,0 +1,11 @@
+drop table graduacao.curso_pre_requisito;;
+drop table graduacao.grade_horario;
+drop table graduacao.orientador_aluno;
+drop table graduacao.nota_aluno;
+drop table graduacao.aluno;
+drop table graduacao.professor;
+drop table graduacao.secao;
+drop table graduacao.instrutor;
+drop table graduacao.curso;
+drop table graduacao.departamento;
+drop table graduacao.sala_aula;

@@ -1,0 +1,22 @@
+O que é o Entity Framework (EF)?
+- O Entity Framework (EF) é uma biblioteca de mapeamento objeto-relacional (ORM, do inglês Object-Relational Mapper) que faz parte do ecossistema .NET. Ele atua como um intermediário entre a aplicação e o banco de dados, permitindo que os desenvolvedores trabalhem om dados de maneira intuitiva e orientada a objetos, sem a necessidade de escrever diretamente comandos SQL para as operações mais comuns.
+
+Beneficios do Entity Framework
+- Proatividade aumentada:
+- Consultada baseada em LINQ:
+- Independência de Banco de Dados:
+- Manutenção facilitada:
+
+Services
+- A camada de serviço é responsável por centralizar e gerencia a lógica de negócio. Ela atua como um intermediário entre a camada de apresentação (UI) e a camada de repositório, abstraindo regras complexas e simplificando o consumo pelos controladores ou APIs
+
+Por que é importante?
+- Evita que controladores ou componentes de UI precisem lidar com regras complexas
+- Facilita alterações na lógica de negócio sem impactar outras partes do sistema
+
+Repository
+- A camada de repositório é responsável por abstrair o acesso ao banco de dados. Ela fornece uma interface para realizar operações de CRUD (Create, Read, Update, Delete) e outras consultas, de forma que a lógica de acesso aos dados fique desacoplada das demais partes do sistema.
+
+Por que é importante?
+- A aplicação não precisa saber detalhes sobre como os dados são armazenados ou recuperados.
+- Permite trocar o banco de dados (por exemplo, de SQL Server para PostgreSQL) sem grandes alterações no restante do sistema.

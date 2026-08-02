@@ -1,0 +1,13 @@
+O que é jQuery
+- jQuery é uma biblioteca de JavaScript rápida, pequena e rica em funcionalidades que simplifica tarefas comuns de desenvolvimento web, como manipulação do DOM, Gerenciamento de Eventos, animações e chamadas AJAX.
+
+Principais características do jQuery
+- Compatibilidade: Funciona de forma consistente em diferentes navegadores, resolvendo problemas de compatibilidade.
+- Facilidade de Uso: Fornece uma sintaxe simples e concisa para realizar tarefas que exigiriam mais código em JavaScript puro.
+- Comunidade Ampla: Possui uma vasta comunidade e muitos recursos, como plugins e documentação.
+
+Por que usar jQuery em projetos web?
+- Embora frameworks modernos como React, Angular e Vue,js sejam amplamente usados, o jQuery ainda é útil em muitas situações, especialmente em projetos que:
+ ° Precisam de soluções rápidas para manipular o DOM.
+ ° Incluem scripts leves para funcionalidades específicas.
+ ° Têm dependências em bibliotecas legadas que utilizam jQuery.

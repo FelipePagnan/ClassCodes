@@ -1,0 +1,19 @@
+﻿@model List<string>
+
+@{
+    ViewData["Title"] = "Início";
+}
+<partial name="Partial/_BoasVindas"></partial>
+<partial name="Partial/_Carrossel" model="Model"></partial>
+
+<div class="text-center mt-5">
+    <h4>Ver total de pessoas cadastradas na plataforma.</h4>
+    <button id="buscarTotalPessoas" class="btn btn-primary">Buscar</button>
+    <p id="resultado" style="margin-top: 10px;"></p>
+
+    <h3>Busca rápida de pessoa</h3>
+    <div class="input-group mb-3">
+        <input id="termoBusca" type="text" class="form-control" placeholder="Digite o nome da pessoa">
+        <button id="botaoBusca" class="btn btn-primary" type="button">Buscar</button>
+    </div> <ul id="resultadoPessoa" class="list-group mt-3"></ul>
+</div>

@@ -1,0 +1,11 @@
+Estrutura de pastas e arquivos
+
+	Rotas
+ O que são rotas?
+As rotas do ASP.NET Core MVC são responsáveis por mapear URLs para ações específicas nos controladores. Elas determinam como as solicitações são direcionadas para o controlador e a ação correspondente, facilitando a execução da lógica necessária e retornar a resposta ao cliente
+
+	O que é o Model Binding?
+O model binding é o processo pelo qual o ASP.NET Core MVC converte dados de uma requisição HTTP (query strigs, formulários, headers, corpo de requisição, etc.) em objetos de modelo definidos em uma aplicação. Ele facilita a manipulação de dados enviados pelos usuários sem a necessidade de parsing manual
+
+	O que são HTML Helpers?
+HTML Helpers são métodos disponibilizados pelo ASP.NET Core MVC para ajudar na geração e elementos HTML. Eles permitem criar componentes HTML dinamicamente de froma mais concisa, reduzindo a probabilidade de erros e garantindo uma integração mais fácil com os dados do modelo.

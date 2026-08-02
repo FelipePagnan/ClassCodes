@@ -1,0 +1,39 @@
+O que são Testes Unitários
+
+° Testes Unitários são métodos que verificam o funcionamento de unidades de código, vulgo métodos, e seus objetos associados
+	- Validação de caminhos principais, alternativos, e de exceção.
+° O grande Objetivo, por incrível que pareça, não é ter uma grande cobertura, e sim resultar um arquitetura melhor, menos acoplada, e de melhor manutenção
+° Classes com muitas dependências são muito difíceis de testar.
+° Métrica utilizada: cobertura de código
+
+Benefíicios
+° Cobertura de caminhos principais, alternativos e de exceção 
+° Detecção de regressão de erros
+° Documentação de regras de negócio
+° Melhor desenho de código
+
+Desafios na Implementação
+° Códigos difíceis de se testar
+° Falta de automação (SonarQube, Jenkins, Azure DevOps, AWS CodePipeline)
+° Limitação técnica
+° Ego e sabotagem dos desenvolvedores (fator humano)
+° Falta de clareza no processo de desenvolvimento
+° Prazos curtos
+° Cultura da empresa
+
+Como testar código ruim
+° Antes de se testar código "ruim", precisamos realizar uma refatoração, afinal, é comum encontrar código fortemente aoplado a implementação de  componentes externos, como:
+	- Bancos de dados
+	- APIs externas
+	- Serviços de nuvem
+° O ideal é aplicar técnicas de refatoração!
+° Uma técnica bem simples mas muito eficiente é:
+	- Extrair método
+	- Extrair classe
+	- Extrair interface
+	- Substituir no código cliente pelo da interface via injeção de dependência
+		- Em muitas situações, será necessário utilizar o container IoC do Framework
+
+Dummies, Mocks, Stubs
+
+° Dummies: dados fakes, geralmentes criados para apenas serem passados em alguma chamada do métodos

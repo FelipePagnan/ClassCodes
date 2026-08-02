@@ -1,0 +1,55 @@
+Fundamentos de Arquitetura Limpa
+
+° Arquitetura é a organização fundamental de um sistema, incluindo seus componentes, o relacionamente entre eles, o ambiente, e os principios em que se baseia sua construção 
+° Geralmente representados com as descrição de uma estrutura, se utilizando também as vezes de um diagrama ou um desenho 
+° É uma arquitetura amplamente utilizada em projetos  NET 
+° Proposta por Rovert Martin (Uncle Bob), com foco em promover a testabilidade, desacoplamento, cousao, e reusabilidade de código 
+° Tem como foco o Dominio do sistema, tendo em sua essência o Domain-Driven Design (DDD) 
+° Tem diversas variações, mas a essência é a mesma 
+° Sua estrutura é dividida em 4 camadas principais, sendo elas:
+	° Core 
+	° Infrastructue 
+	° Application  
+	° API / UI 
+	
+Camada Core
+° Camada central da Clean Arquitectute, contendo a expressão em codigo do dominio do negócio 
+° Alguns conceitos e componentes do Domain-Driven Design são expressados aqui, como:
+	° Entidades e agregados 
+	° Values Objects 
+	° Factories 
+	° Repositórios (interface) 
+	° Enums relacionados a outros componentes dessa camada 
+	° Serviços de Domínio 
+	° Exceções de Domínio 
+	
+Camada Infrastructue
+° Camada responsável por integração com componentes de insfraestrutura, como o acesso a dados, caching, serviços de computação em nuvem, outros sistemas (externos ou internos à organização), entre outros
+° Cada um dos subitens pode ser dividio em projetos próprios, como
+	° Persistence 
+	° Integration 
+	° Cloud Services 
+	° Caching 
+	° Authentication 
+
+° Os principais comoponentes que geralmente estão contidos aqui são:
+	° Classes relacionados a acessos a dados, como tontexto de dados e implementação de Repositórios 
+	° Serviços de infraestrutura, que permitie integração com serviços anteriormente citados neste tópico 
+
+Camada Application
+° Camada responsável pela implementação de casos de uso, que poderá varias com o padrão arquitetural, como:
+	° Serviços de aplicação, caso sigo com a abordagem padrão da Clean Arquitecture 
+	° Commands e Queries, caso utilize o CQRS:
+		° Em algumas implementações, as Queries são encontradas na camada Infrastructue, lidando diretamente com a projeção de dados a partir da biblioteca utilizada para acesso a dados (como EF Core, Dapper, ADO NET) 
+	° DTOs de casos de um uso, como:
+		° View Models 
+		° Input Models 
+		
+Camada UI / API
+° Camada responsável pelo codigo de intreface com outros componentes externos, como usuários ou aplicações 
+° Pode ser uma API (puramente back-end), ou mesmo conter Views, como em modelo MVC
+° É configurada a parte de injeção de dependência para a aplicação
+° Os principais componenetes que geralemnte estão contidos aqui são:
+	° Controllers e Actions
+	° Filters
+	° Outros recurso do framework web

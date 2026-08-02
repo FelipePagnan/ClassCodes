@@ -1,0 +1,50 @@
+Validação de APIs
+
+° Uma das maiores dores de cabeça de um programador é tratar dados inconsistentes no banco de dados
+° É confiar que dados como a seguir vão vir corretos:
+	- CEP
+	- Nome da Cidade
+	- CPF
+	- Email
+	- Telefone
+° Prevenir é muito mais barato do que gastar muito tempo apagando incêndio por falta de validação na API
+° A estrutura ideia de validação em um sistema
+	- Validação no client (front-end, como app, web, ou desktop)
+	- Validação na entrada da API
+	- Validação a nível de domínio
+	
+Fluent Validation
+
+° Biblioteca utilizada para validação de objetos, portante permitindo ser utilizada para verificar nossos modelos de entrada (Commands / Input Models).
+° Instalada na aplicação através do pacote FluentValidation.AspnetCore
+° São cridas Classes de validação para cada modelo de entrada a ser validado
+° Para utilizar está biblioteca, o fluxo é:
+	- Configurar o Fluent Validation de forma global
+	- Criar uma classse que herde de AbstractValidator<T>
+	- Implementar as regras no construtor através do método RuleFor
+° Caso prefira fazer de forma manual, é possível utilizar injeção de dependência para obter o objeto IValidator<T>, onde terá acesso ao método Validate e seu resultado, checando a propriedade IsValid
+° Métodos de validação mais utilizados
+	° NotFull, NotEmpty
+		- NotNull: Valida se o valor é null
+		- NotEmpty: Valida se não é null, vazio (""), espaço em branco ou o valor padrão do tipo (como 0 para numeros).
+	° Equal, NotEqual
+		- Equal: Valida se o valor é igual ao informado
+		- NotEqual: Valida se o valor é diferente do informado	
+	° Length, MaxLength, MinLength
+		- Length: Valida se o tamanho de um texto ou coleção está entre o mínimo e o máximo
+		- MaxLength: Valida se o tamanho não ultrapassa o limite
+		- MinLength: Valida se o tamanho atinge o mínimo definido
+	° LessThan, LessThanOrEqualTo, GreaterThan, GreaterThanOrEqualTo
+		- LessThan: Valida se é menor que o valor informado
+		- LessThanOrEqualTo: Valida se é menor ou igual
+		- GreaterThan: Valida se é maior
+		- GreaterThanOrEqualTo: Valida se é maior ou igual
+	° Must
+		- Must: Permite criar uma regra personalizada com uma função que retorna true ou false
+	° EmailAddress
+		- EmailAddress: Valida se o texto tem formato de e-mail válido
+	° CreditCard
+		- CreditCard: Valida se o texto tem formato valído de cartão de crédito, incluindo verificação de consistência do número
+	° IsInEnum
+		- IsInEnum: Valida se o vvalor pertence a um Enum
+	

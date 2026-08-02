@@ -1,0 +1,29 @@
+Introdução a ASP.NET Core
+
+- Framework de código aberto, multiplataforma, leve, e de alto desempenho para a construção de aplicações web modernas
+- Lançado em junho de 2016, está na versão .NET 8 (LTS), e é a escolha padrão para novos projetos na plataforma .NET
+- Tem recursos nativos como
+  ° Injeção de dependência
+  ° Middlewares
+  ° Configuração por ambiente
+  ° Serviços em segundo plano
+- Excelente curva de aprendizagem
+
+Controller e Actions
+° Controller são classes que agrupa, um conjunto de Actions, e que herdam de Controller ou ControllerBase.
+° Agrupam de maneira lógica baseado no recurso a ser acessado.
+° Exemplo: ProjectsController.
+
+° Actions são métodos que estão contidos nos controller, e representam endpoints. Através delas são definidas as rotas e métodos HTTP utilizados, e seu tipo retorno geralmente é IActionResult, implementado por respostas como Ok, NotFound, entre outras.
+° Importante separar modelos de dados de entrada e saída, do modelo de domínio.
+° Com isso evitamos exposição de dados confidencias que devem ficar apenas na entidade e não no modelo de saída.
+° Modelos de entrada e saída são basicamente DTOs, Data Transfer Objects, e são chamados respectivamente de Input Models e View Models
+ - Reforçando: DTO é um termo genérico
+
+Injeção de Dependência
+- Técnica de extrair a responsabilidade de instanciar uma dependência para fora de uma classe, passando geralmente uma instância do objetos através de construtor;
+ - Entre os benefícios está a melhoria de testabilidade, além de diminuição do acoplamento (quando utilizada com interfaces)
+- No ASP .NET Core existem três tempos de ciclo de vida de um objeto de dependência:
+ ° Singleton: a mesma instancia do objeto é utilizada em todo o escopo da aplicação, no mesmo entre requisições diferentes.
+ ° Scoped: é utilizada uma instancia para requisição interna.
+ ° Transient: é utilizada uma instancia por cada uso

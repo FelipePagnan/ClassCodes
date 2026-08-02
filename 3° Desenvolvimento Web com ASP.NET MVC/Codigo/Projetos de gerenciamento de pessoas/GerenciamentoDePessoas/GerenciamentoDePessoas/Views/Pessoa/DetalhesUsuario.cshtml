@@ -1,0 +1,25 @@
+﻿@model List<Pessoa>
+
+<h1>Detalhes dos usuários</h1>
+@* <h2>@ViewBag.TextoDescricao</h2> *@
+<h2>@ViewData["TextoDescricao"]</h2>
+
+@foreach (var pessoa in Model)
+{
+    <p>Id: @pessoa.Id</p>
+    <p>Nome: @pessoa.Nome</p>
+    <p>Sobrenome: @pessoa.Sobrenome</p>
+    <p>DataNascimento: @pessoa.DataNascimento</p>
+    <br />
+
+    if (pessoa.Sobrenome != "Silva")
+    {
+        <p>@pessoa.Nome @pessoa.Sobrenome não pertence a família Silva.</p>
+    }
+
+}
+
+<p>
+    @* @ViewBag.DataAtual *@
+    @ViewData["DataAtual"]
+</p>

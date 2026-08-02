@@ -1,0 +1,237 @@
+Tipos de dados
+
+STRING
+
+TIPOS DE DADOS		DESCRICAO													TAMANHO MAXIMO				TAMANHO (bytes)
+Char(n)				- Tamanho fixo, completado com espacos em brancos			8.000 caracteres			Tamanho Definido
+Varchar(n)			- Tamanho variável com limite								8.000 caracteres			2 bytes + numeros de caracteres
+Varchar(max)		- Tamanho variável com limite								1.073.741.824 caracteres	2 bytes + numeros de caracteres
+text				- Tamanho variável											2GB de dados(texto)			4 bytes + numeros de caracteres
+nchar				- Tamanho fixo com espacos em brancos						4.000 caracteres			Tamanho definido x 2
+nvarchar			- Tamanho variável											4.000 caracteres
+nvarchar(max)		- Tamanho variável											536.870,912 caracteres
+ntext				- Tamanho variável											2GB de texto	
+binary(n)			- Tamanho fixo (binário)									8.000 bytes
+varbinaty			- Tamanho fixo (binário)									8.000 bytes
+varbinaty(max)		- Tamanho variável (binário)								2GB
+image				- Tamanho variável (binário)								2GB
+
+
+INT
+
+TIPOS DE DADOS		DESCRICAO													TAMANHO (bytes)
+Bit					- Numero inteiro pode ser 0, 1 ou NULL						
+
+Tinyint				- Permite numeros inteiros de 0 a 255						1 Byte
+
+Smallint			- Permite numeros inteiros	32.768 e 32.767					2 Bytes
+
+Int					- Permite numeros inteiros -2.147.483.648 e 
+					  2.147.483.647  											4 Bytes
+
+Bigint				- Permite numeros interito -9.223.372.036.854.775.808
+					e 9.223.372.036.854.775.807									8 Bytes
+
+Decimal(p,s)		- Precisao de numeros flutuantes de escala					5-17 Bytes
+					Permite numeros de -10^38+1 a 10^38-1
+					O parametro P indica o numero total maximo de digitos 
+					que podem ser armazenados (ambos a esquerda e a direita
+					do ponto decimal).p deve ser um valor de 1 a 38. 
+					o Padrao é 18.
+					O parametro S indica o numero maximo de digitos 
+					armazenados a direita do ponto decimal. S deve ser um 
+					valor de 0 a P. O valor padrão é O							
+
+Numeric(p,s)		- Precisao de numero flutuante e numero de escala.			5-17 Bytes
+					Permite numero de -10^38+1 a 10^38-1.
+					O parametro P indica o numero total maximo de digitos
+					que podem ser armazenados (ambos á esquerda e á direita
+					do ponto decimal).p deve ser um valor de 1 a 38. O padrão
+					é 18
+					O parametro S indica o numero maximo de digitos armazenados
+					a direita do ponto decimal .s deve ser um valor de 0 a p.
+					O valor padrão é 0											
+
+Smallmoney			- Tipo de "Moeda" de -214.748.3648 e 214.748.3647			4 Bytes
+
+Money				- Tipo de "Moeda" de -922.337.203.685.477.5808 ambos		8 Bytes
+					922.337.203.685.477.5807									
+
+Float(n)			- Precisao de numero flutuante de 1.79E+ 308 				4 ou 8 Bytes
+					a 1.79E + 308.
+					O parametro N indica se o campo deve conter 4 ou 8 bytes
+					.Float(24) contém um campo de 4 bytes e o float(53) mantém
+					um campo de 8 bytes. O valor padrão de N é 53				
+
+Real				- Precisao de numero flutuante de -3.40E + 38 a 3.40E + 38	4 Bytes
+					  
+					  
+Datas
+
+TIPOS DE DADOS		DESCRICAO													TAMANHO (bytes)
+DateTime			- De 1 de janeiro de 1753 a 31 de dezembro de 9999			8 Bytes
+					com uma precisa de 3.33 milisegundos			
+DateTime2			- De 1 de janeiro de 0001 a 31 de dezembro de 9999			6-8 Bytes
+					com uma precisa de 100 nanossegundos
+Smalldatetime		- De 1 de janeiro de 1900 a 6 de junho de 2079 com 			4 Bytes
+					precisao de 1 minuto
+Date				- Armazena apenas uma data. De 1 de janeiro de 0001			3 Bytes
+					a 31 de dezembro de 9999
+Time				- Armazena um tempo apenas para uma precisão de 100			3-5 Bytes
+					nanosegundos
+Datetimeoffset		- O mesmo que datetime2 com adicao de deslocamento			
+					de fuso horario
+Timestamp			- Armazena um numero unico que é utilizado sempre
+					que uma linha é criada ou modificada. O valor do 
+					timestamp é baseado em um relogio interno e nao
+					correspondente ao tempo real.cada tabela por ter 
+					apenas uma variavel timestamp
+					
+----------------------------------------------------------- CHAVES PRIMARIAS -------------------------------
+
+As chaves primeias de uma tabela tem o objetivo de tornar um registro unico dentro de um conjunto de registro de uma tabela. Uma PK
+é conhecida como uma superchave, devido a seu objetivo, a superchave pode ser formada por apenas um atributo ou grupo de atributos de
+uma tabela. É importante salientar que uma chave primaria pode ser fruto de uma chave estrangeira de uma outra tabela. As PKs recebem
+restrições de UNIQUE e NOT NULL assim as chaves primarias e a tebela são criadas.
+
+--------------------------------------------------------- CHAVES ESTRANGEIRAS ------------------------------
+
+As chaves estrangeiras tem como papel permitir o relacionamento entre as tabelas, com isso quando uma FK é referenciada a partir de um
+PK é criada uma restrição relacional, no qual os dados desta coluna precisam estar dentro do grupo de dados da tabela originail da chave 
+primaria. Em suma, ao preencher com dados a FK é necessário que sejam os mesmos dados da tebale original, que no caso é a PK. As chaves
+estrangeiras podem ser nulas de acordo com os desenhos de negocio dos bancos de dados. Ademais, quando se referencia uma FK é necessário
+que os tipos dos atributos e precisões sejam iguais a orgiem, além disso é visto como uma boa prática repetir o nome da coluna e se 
+adicionar o FK no inicio do nome do atributo. As FK quando referenciadas em uma tabela ela gera restrições em determinadas transações.
+
+
+----------------------------------------------------------- COMANDOS SQL ------------------------------------
+
+NO ACTION - A transação que viola a integridade é rejeitada e as alterações são revertidas
+
+CASCADE - As linhas correspondentes são atualizas ou exlcuidas na tabela de referencia quando essa linha é atualizada ou excluidas na 
+tabela pai. CASCADE não poderá ser especificada se uma coluna timestamp fizer parte da chave estrangeira ou da chave referenciada. 
+	Combinações ON DELETE CASCADE, ON UPDATE CASCADE
+
+SET NULL - Todos os valores que compõem a chave estrangeira são definidos como NULL quando a linha correspondente da tabela pai é
+atualizada ou excluida. Para que essa restição seja executada, as colunas de chave estrangeira devem ser anuláveis. 
+	Combinações ON DELETE SET NULL, ON UPDATE SET NULL
+
+SET DEFAULT - Todos os valoes que compõem a chave estrangeira serão definidos com seus valores padrão se a linha correspondente na 
+tabela pai for atualizada ou excluida. Para que essa restrição seja executada, todas as colunas de chave estrangeiras devem ter 
+definições padrão. Se a coluna for anulável e não houver nenhum valor padrão explícito definido, NULL se tornará o valor padrão
+implicito para a coluna. 
+	Exemplo de deafult COLUMN_B INT DEFAULT 50.
+	
+CONSTRAINT - As constraints são os grupos de restrições enumeradas e detalhadas acima, mas para além do que sabemos, qual a outra 
+utilidade do constraint? Além de ser um conjunto de restrições, tem como funcionalidade possibilitar a nomeação da constraints que 
+podem ser escolhidas para impor integridade aos dados, são check e unique. 
+	Exemplo CONSTRAINT exemplo CHECK (ColumnD > 10 AND ColumnD < 50 ou TransactionID int NOT NULL,
+		CONSTRAINT AK_TransactionID UNIQUE(TransactionID	
+
+DROP - Tem como objetivo permitir a exclusão de objetos dentro do banco de dados. E esse comanda faz a exclusão de tabelas, schemas
+e banco de dados. É importante lembrar que o processo de exclusão também respeita as restrições nas quais a tabela é estendida, como
+a restrição relacional das chaves estrangeiras. 
+	Exemplos de utlização do comando DROP TABELE GRADUACAO.CURSO_PRE_REQUISITO
+	
+TRUNCATE - O comando TRUNCATE tem como objetivo permitir a exclusão a nível de registros de uma tabela, mas diferente do comando DELETE, 
+não é possível por uma cláusula WHERE para filtrar registros específicos. O filtro que é permitido é o de partição, só é possível 
+aplicar esse filtro de particionamento se o banco de dados tiver essa funcionalidade ativada. Outro ponto importante é que o TRUNCATE é 
+mais performático que o DELETE, pois faz a exclusão dos registros de uma vez, já o DELETE faz um por vez. É importante lembrar que a 
+transação de TRUNCATE também respeita as restrições nas quais a tabela é estendida, como a restrição relacional das chaves estrangeiras. 
+Além disso, não será possível reverter a operação de TRUNCATE com o ROLLBACK. 
+	Exemplos de utilização do comando truncate table graduacao.curso_pre_requisito;
+	
+ALTER - O comando ALTER tem como objetivo permitir alterações a nível de tabela no nosso caso, pois o comando ALTER pode ser utilizado
+em vários níveis do banco de dados. Então quais os escopos pertinentes para o nosso caso? Podemos usar o ADD column, DROP column,
+ADD CONSTRAINT, DROP CONSTRAINT, ADD PRIMARY KEY, ADD FOREIGN KEY, DROP PRIMARY KEY, DROP FOREIGN KEY, ADD CHECK CONSTRAINT, 
+DROP CHECK CONSTRAINT . Essas são as principais alternativas de utilização do comando ALTER.
+	Alguns exemplos:
+		ALTER TABLE graduacao_teste.instrutor ADD instituicao_formação varchar(30);
+		ALTER TABLE graduacao_teste.instrutor ADD id_instituicao_formação numeric(4) NOT NULL;
+		ALTER TABLE graduacao_teste.instrutor ALTER COLUMN instituicao_formação varchar(20);
+		ALTER TABLE graduacao_teste. instrutor ALTER COLUMN instituicao_formação varchar(30) NOT NULL;
+		ALTER TABLE graduacao_teste.instrutor DROP CONSTRAINT CK__instrutor__salar__619B8048; --DELETE DA RESTRICAO NATIVA DA CRIACAO DA PK
+			NA CRIACAO DA TABELA
+		ALTER TABLE graduacao_teste.instrutor ADD CONSTRAINT pk_instrutor PRIMARY KEY (id_instrutor, id_instituicao_formação);
+		ALTER TABLE graduacao_teste.instrutor DROP CONSTRAINT pk_instrutor;
+		ALTER TABLE graduacao_teste.instrutor DROP COLUMN id_instituicao_formação,instituicao_formação;
+		
+INSERT - O comando INSERT gera uma solicitação para inserir dados na tabela, essa inserção deve respeitar as restrições contidas na tabela.
+Logo se as colunas possuem FK, CHECK, NOT NULL, no momento da inserção dos dados as informações selecionada para preencher a tabela devem 
+respeitar as CONSTRAINT estabelecidas. Agora que entendemos como o INSERT se comporta, vamos ver quais as possibilidades de INSERT podemos
+utilizar para gerar o preenchimento de dados em uma relação.
+	As formas para se fazer um INSERT são as seguintes:
+		Declarando os atributos e valores na hora de fazer o INSERT - insert into graduacao_teste.curso (id_curso, titulo, nome_departamento, 
+		creditos) values ('100', 'Programming', 'Comp. Sci.', 4)
+		Declarando apenas os valores que deseja inserir na tabela - insert into graduacao.curso values ('100','Programming', 'Comp. Sci.', 4)
+	
+	As formas para se fazer um INSERT são as seguintes:
+	Utilizando o resultado de uma query como origem para o INSERT
+		insert into graduacao.instrutor
+			select id_aluno, nome, nome_departamento, 36000 as salario
+			from graduacao.aluno
+			where nome_departamento = 'Civil Eng.';	
+			
+UPDATE - O comando UPDATE gera uma solicitação para atualizar os dados de uma tabela, essa inserção deve respeitar as restrições contidas na 
+tabela .Logo se as colunas possuem FK, CHECK, NOT NULL, no momento da atualização dos dados os valores selecionados para serem atualizados 
+devem respeitar as CONSTRAINT estabelecidas. Agora vamos ver como podemos atualizar valores de uma tabelas.
+	As formas para se fazer um UPDATE são as seguintes:
+		Fazendo uma atualização sem filtros no UPDATE, gerando uma mudança em todos os valores da colunaupdate
+			graduacao.instrutor
+			set salario = salario * 1.05;
+			
+	Fazendo uma atualização da cláusula CASE no UPDATE, gerando várias mudanças nos valores de acordo com as condições estabelecidas no CASE.
+		update graduacao.instrutor
+		set salario = case
+		when salario <= 100000 then salario * 1.05
+		else salario * 1.03
+		end;	
+		
+DELETE - O comando DELETE como vimos na última aula, tem como objetivo permitir a exclusão a nível de registros de uma tabela. E esse comando 
+faz a exclusão dos registros de uma tabela de forma total ou mediante aos filtros de uma cláusula WHERE. É importante lembrar que a transação 
+de exclusão de registros também respeita as restrições nas quais a tabela é estendida, como a restrição relacional das chaves estrangeiras. 
+Além disso, se o banco de dados estiver com a configuração de COMMIT automático, será possível reverter qualquer erro usando o comando ROLLBACK. 
+Exemplos de utilização do comando
+	delete from graduacao.professor;
+	delete from graduacao.professor where ano = 2007 and id_professor = '14365';
+	
+SELECT - O comando SELECT é o comando mais utilizado no ambiente de consultas é SQL, é a base para retorno dos dados de um banco de dados, a 
+estrutura básica de uma consulta utilizando o SELECT é a SELECT * FROM table WHERE atributo¹ >= “”. Diante disto, as consultas têm uma infinidade 
+de possibilidades de construção.
+
+Consulta de uma única consulta
+	Diante disto, temos consultas simples nas quais utilizamos a estrutura básica para acessar aos dados, dentro desse tipo de consulta podemos 
+trazer todos os campos utilizando * , podemos selecionar apenas o campos necessários, um adendo é visto como uma boa prática, para utilização do 
+resultado da consulta.
+
+	select nome										select nome
+	from graduacao.instrutor						from graduacao.instrutor
+	where nome_departamento = 'Comp. Sci.';			where nome_departamento = 'Comp. Sci.'
+													and salario > 80000;
+													
+Consulta com múltiplas tabelas
+
+select nome, id_curso								select nome, id_curso, nome_departamento			select *
+from graduacao.instrutor , graduacao.professor		from graduacao.instrutor , graduacao.professor		from graduacao.instrutor , graduacao.professor
+where id_instrutor = id_professor;					where id_instrutor = id_professor					where id_curso = '843';
+													and nome_departamento = 'Pol. Sci.';
+													
+Consultas com subconsultas:
+As consultas com que utilizam subconsultas, tem sua principal utilização em três formas, para servir como elemento de comparação no predicado da 
+cláusula WHERE, outra forma de usar na cláusula FROM em substituição de uma relação e por fim na cláusula WITH no qual são geradas tabelas temporárias 
+que vão ser utilizadas no escopo da consulta.
+
+	select nome_departamento, avg_salario
+	from (select nome_departamento,
+	avg (salario) as avg_salario
+	from graduacao.instrutor
+	group by nome_departamento) subquery
+	where avg_salario > 42000;
+	
+	select *
+	from graduacao.secao as S
+	where semestre = 'outono' and ano = 2002 and
+	exists (select *
+	from graduacao.secao as T
+	where ano = 2007
+	and S.id_curso = T.id_curso);

@@ -1,0 +1,51 @@
+Fundamentos de Persistência e ORN
+° Persistir é o processo de armazenar dados de maneira a que, mesmo após interrupção do serviço de armazenamento ou do processo que o armazenou, o dado ainda existe;
+° Dados persistidos devem ser estáticos, a não que sejam alterados explicitamente;
+° Recuperáveis mesmo após falhas;
+° Importantes ao negócio.
+
+Exemplos de fontes de dados persistentes
+° Banco de dados relacionais: SQL Server, PostgreSQL, MySQL;
+° Bancos de dados não-relacionais: Neo4j, MongoDb, Redis,  CouchBase, Cassandra;
+° Arquivos em disco;
+° Containers/ buckets de dados: Amazon S3, Azure Storage, Google Cloud Storage.
+
+° ORN significa "Object-Relational Mapper" e representa uma ferramenta que realiza o "meio de campo" entre aplicação que utiliza o paradigma orientado a objetos, e um banco de dados relacional, que utliza o modelo relacional:
+	° Aplicações geralmente entendem dados em formato Json;
+	° Modelos relacionais trabalham com tabelas e colunas.
+° No caso do .NET, antigamente precisava-se utlizar o ADO.NET, que é um conjunto de recursos do .NET, para acesso a dados:
+	° Porém, ele não oferece um alternativa agil e simplificada, sendo passivel de erros de escrita de nomes de colunas, entre outros problemas.
+° Diante disso, surgiram os primeiros ORMs, se destacando o Entity Framework e o LINQ-to-SQL;
+° Com o uso de ORMs, a produtividade é aumentada através de métodos que permite interagir com o DB sem necessitar de codigo SQL.
+
+Fundamentos de Entity Framework Core
+° É um ORM:
+	° ORM significa "Object-Relational Mapper" e representa uma ferramenta que realiza o "meio de campo" entre aplicação que utiliza o paradigma orientado a objetos, e um banco de dados.
+° Com isso, a produtividade é aumentada através de métodos que permite interagir com o BD sem necessitar de código SQL;
+° Versão multiplataforma, mais leve e performática do ORM popular Entity Framework;
+° Suporte a SQL Server, SQLite, PostgreSQL, MySQL, entre outros.
+
+Principais conceitos
+	° Code First: metodologia onde primeiro se escreve o código, e com base nele depois se atualiza a estrutura do bancos de dados;
+	° DbContext: objeto cuja instância representa uma sessão de acesso ao banco de dados, sendo utilizado para operações;
+	° DbSet: representa a coleção das entidades de um certo tipo que podem ser consultadas a partir do banco de dados;
+	° Migrations: recurso que permite a evolução da estrutura no banco de dados ao longo do tempo e a partir das alterações do codigo, principalmente, as entidades
+	
+Algumas configurações de propriedades disponiveis:
+	° IsRequired: especifica se a propriedade permite ou não permite valores nulos;
+	° HasMaxLength: especifica o tamanho máximo de uma propriedade de cadeia de caracteres;
+	° HasColumnType: especifica o tipo da coluna no banco de dados;
+	° HasColumnName: especifica o nome da coluna no banco de dados;
+	° ToTable: permite especificar um nome para a tabela.
+	
+° Configurando relacionamento entre entidades:
+	° Criar uma propriedade que representa a chave estrangeira;
+	° Criar propriedade de navegação;
+	° Configurar o relacionamento entre as entidades via Fluent API (preferivel utilizar) ou Data Annotation, junto com configuração de chave estrangeira.
+° Possibilidade de uso de banco de dados em memória.	
+
+° Gerando e aplicando Migrations
+	° dotnet ef migrations add NomeDaMigration
+		° Parâmetros opcionais comuns: -o -s
+	° dotnet ef database update
+		° Parâmetro opcional comum: -s
