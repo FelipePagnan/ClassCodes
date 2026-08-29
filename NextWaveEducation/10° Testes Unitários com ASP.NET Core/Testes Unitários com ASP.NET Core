@@ -127,3 +127,13 @@ Geração de dados com Bogus
 	° Suporte a diferentes tipos de dados (nomes, endereços, datas, numeros, etc.);
 	° Localização para gerar dados especificos de culturas (ex. : en-US, pt-BR);
 	° Configuração simples e intuitiva.
+	
+° Principais Métodos:
+	° .Name.FirstName() - Gera um primeiro nome.
+	° .Name.LastName() - Gera um sobrenome.
+	° .Address.City() - Gera um nome de cidade.
+	° .Phone.PhoneNumber() - Gera um número de telefone.
+	° .Data.Past() - Gera uma data no passado.
+	° .Finance.CreditCardNumber() - Gera números de cartão de crédito válidos.
+	° .Internet.Email() - Gera um endereço de email.
+	° .Internet.UserName() - Gera um nome de usuário
