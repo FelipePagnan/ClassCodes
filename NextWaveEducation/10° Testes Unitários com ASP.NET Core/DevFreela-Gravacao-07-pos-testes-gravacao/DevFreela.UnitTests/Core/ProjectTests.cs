@@ -2,11 +2,6 @@
 using DevFreela.Core.Enums;
 using DevFreela.UnitTests.Fakes;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DevFreela.UnitTests.Core
 {

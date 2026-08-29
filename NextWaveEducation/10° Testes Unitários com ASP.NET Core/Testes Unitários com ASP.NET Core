@@ -36,4 +36,94 @@ Como testar código ruim
 
 Dummies, Mocks, Stubs
 
-° Dummies: dados fakes, geralmentes criados para apenas serem passados em alguma chamada do métodos
+° Dummies: dados fakes, geralmentes criados para apenas serem passados em alguma chamada do métodos de interesse
+° Mocks: Objeto pré-programado em que são definidas expectativas nas chamadas e respostas que ele possa tratar, com possibilidade de verificação nas chamadas feitas
+° Stubs: Definem respostas "chumbadsa" em métodos para simplificar os testes, sobrescrevendo as reais implementações, por exemplo
+	- Exemplo: seu método espera um INotificationService, e você cria um FakeNotificationService que implementa essa interface, para substituir na hora de passar para a classe e ser testada
+	
+Padrão de Escrita
+
+° AAA: Arrange, Act, Assert
+	- Arrange: Preparação para o teste, criação e configuração de mocks
+	- Act: Ação a ser testada
+	- Assert: Checagem do estado pós-ação
+
+° Given_When_Then
+	- Uma classe de teste por caso de uso
+	- Uma classe de teste por classe testada
+
+Fundamentos de xUnit
+
+° xUnit: é um framework de teste unitário para .Net, projetado para ser simples e extensível.
+° Histórico:
+	- Criado por Brad Wilson e Jim Newkirk, que também contribuíram para NUnit.
+° Objetivo:
+	- Promover práticas de testes modernas ee padrões de código limpo.
+	
+° Componentes:
+	- Classes de Teste: Contém métodos de teste
+	- Métodos de Teste: Um método que verifica uma funcionalidade específica
+° Atributos principais:
+	- [Fact]: Usado para indicar que um método é um teste de unidade.
+	- [Theory],[InlineData] e [MemberData]: Usados para testes parametrizados.
+° Assertivas:
+	- Principais Métodos:
+		- Assert.Equal(expected, actual): Verifica se dois valores são iguais.
+		- Assert.NotEqual(notExpected, actual): Verifica se dois valores não são iguais.
+		- Assert.True(condition): Verifica se a condição é verdadeira.
+		- Assert.False(condition): Verifica se a condição é falsa.
+		
+Fundamentos de NSubstitute
+
+° NSubstitute é uma biblioteca para criação de objetos substitutos (mocks) usados em testes unitários.
+° Objetivo: Facilitar a substituição de dependências em testes unitários, permitindo a simulação de comportamentos e verificação de interações;
+° Características:
+	° Sintaxe simples e Intuitiva: Uso de expressões lambda para configuração e verificação;
+	° Suporte para Proxies Dinâmicos: Criação de objetos substitutos sem necessidade de configuração explícita;
+	° Integração com Diversos Frameworks de Teste: Compatível com xUnit, NUnit, MSTeste, entre outros.
+	
+° Principais usos:
+	° Substituiçao de dependências: Substituiçao de dependências para isolar a unidade sendo testada.
+	° Simulação de Comportamentos Complextos: Quando metodos tem comportamentos complexos ou dependem de serviços externos.
+	° Verificação de interações: Verificar se métodos são chamados corretamente durante a execução do teste.
+
+Fundamentos de Moq
+
+° Moq é uma biblioteca amplamente utilizada para criação de mocks, stubs e fakes em testes unitarios no ecossistema .NET
+° Objetivo: Facilitar a substituição de dependências em testes de unidade, permitindo a simulação de comportamentos, a verificação de interações e a criação de testes mais isolados e confiáveis.
+° Características:
+	° Sintaxe Simples e Intuitiva: Uso e expressões lambda para configuração e verificação.
+	° Mocks Fortementes Tipados: Permite criar objetos substitutos fortemente tipados, garantindo mais segurança e fluidez ao escrever testes.
+	° Configuração Dinâmica de Retornos: Possibilidades de configurar facilmente comportamentos como retornos conficionais, exceções lançadas, ou execução de callbacks.
+	° Integração com diversos Frameworks de Teste: Compatível com xUnit, NUnit, MSTest, entre outros.
+° Principais usos:
+	° Substituiçao de Dependências: Substituiçao de dependências para isola a unidade sendo testada.
+	° Simulação de Comportamentos Complextos: Quando têm comportamentos complexos ou dependem de serviços externos.
+	° Verificação de interações: Verificar se métodossão chamados corretamente durante a execução do teste.
+	
+Validações com Fluent Assertions
+
+° Fluent Assertions é uma biblioteca .NET para escrever assertivas de testes de forma fluida, legível e descritiva.
+° Objetivo:
+	° Melhorar a clareza e a precisão na verificação de resultados esperados em testes unitarios e de integração
+° Características:
+	° Sintaxe fluida e human-readable.
+	° Suporte a diferentes tipos de objetos e cenários de teste.
+	° Compatível com xUnit, NUnit, MSTest, entre outros.
+	° Possibilidade de validações customizadas.
+° Principais Métodos:
+	° .Should().Be() - Verifica se valores são iguais;
+	° .Should().BeNull() / .Should().NotBeNull() - Verifica se valores são ou não nulos;
+	° .Should().BeEmpty() / .Should().NotBeEmpty() / .Should().Contain() - Verifica se uma coleção contém está ou não vazia, se contém um item, respectivamente;
+	° .Should().Throw<Exception>() - Verifica se uma exceção específica foi lançada;
+	° .Should().BeEquivalentTo() - Verifica equivalência profunda de objetos.
+
+Geração de dados com Bogus
+
+° Bogus é uma biblioteca .NET para gerar dados ficticios (fake data) de maneira facil e rapida, ideal para testes, prototipaçao e preenchimento de bancos de dados.
+° Objetivo:
+	° Ajudar a criar dados realistas para simular cenarios de uso, garantindo maior confiabilidade em testes e aplicações de demonstração
+° Características:
+	° Suporte a diferentes tipos de dados (nomes, endereços, datas, numeros, etc.);
+	° Localização para gerar dados especificos de culturas (ex. : en-US, pt-BR);
+	° Configuração simples e intuitiva.
