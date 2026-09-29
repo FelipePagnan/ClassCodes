@@ -1,0 +1,151 @@
+@DevFreela.API_HostAddress = https://localhost:7223/api
+@JwtToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4uZG9lLmNsaWVudEBleGFtcGxlLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImNsaWVudCIsImV4cCI6MTczNjgwMDQyNiwiaXNzIjoiRGV2RnJlZWxhLkFQSSIsImF1ZCI6IkRldkZyZWVsYUFwcCJ9.WlC8RM41mGjs-tz5CIauyCRksf3ZA77_FB9rwg0rAkY
+
+### Create a new user freelancer
+POST {{DevFreela.API_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "email": "xihisa5599@fenxz.com",
+  "birthDate": "1990-01-01",
+  "password": "strongpassword123",
+  "role": "freelancer"
+}
+
+### Create a new user client
+
+POST {{DevFreela.API_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "fullName": "John Doe Client",
+  "email": "john.doe.client@example.com",
+  "birthDate": "1990-01-01",
+  "password": "strongpassword123",
+  "role": "client"
+}
+
+### Login as the created freelancer
+PUT {{DevFreela.API_HostAddress}}/users/login
+Content-Type: application/json
+
+{
+  "email": "xihisa5599@fenxz.com",
+  "password": "newStrongPassword123"
+}
+
+### Login as the created client
+PUT {{DevFreela.API_HostAddress}}/users/login
+Content-Type: application/json
+
+{
+  "email": "john.doe.client@example.com",
+  "password": "strongpassword123"
+}
+
+### Get a user by ID (requires authorization)
+GET {{DevFreela.API_HostAddress}}/users/1
+Authorization: Bearer {{JwtToken}}
+
+### Add skills to a user (requires authorization)
+POST {{DevFreela.API_HostAddress}}/users/1/skills
+Authorization: Bearer {{JwtToken}}
+Content-Type: application/json
+
+{
+  "skillIds": [1, 2, 3]
+}
+
+### Get all skills (requires authorization)
+GET {{DevFreela.API_HostAddress}}/skills
+Authorization: Bearer {{JwtToken}}
+
+### Create a new skill (requires authorization)
+POST {{DevFreela.API_HostAddress}}/skills
+Authorization: Bearer {{JwtToken}}
+Content-Type: application/json
+
+{
+  "description": "C#"
+}
+
+### Get all projects (requires authorization)
+GET {{DevFreela.API_HostAddress}}/projects?search=crm
+Authorization: Bearer {{JwtToken}}
+Content-Type: application/json
+
+### Create a new project (requires authorization)
+POST {{DevFreela.API_HostAddress}}/projects
+Authorization: Bearer {{JwtToken}}
+Content-Type: application/json
+
+{
+  "title": "New Project",
+  "description": "A description for the new project",
+  "idClient": 3,
+  "idFreelancer": 2,
+  "totalCost": 5000
+}
+
+### Update a project (requires authorization)
+PUT {{DevFreela.API_HostAddress}}/projects/1
+Authorization: Bearer {{JwtToken}}
+Content-Type: application/json
+
+{
+  "idProject": 1,
+  "title": "Updated Project Title",
+  "description": "Updated description for the project",
+  "totalCost": 7500
+}
+
+### Delete a project (requires authorization)
+DELETE {{DevFreela.API_HostAddress}}/projects/1
+Authorization: Bearer {{JwtToken}}
+
+### Start a project (requires authorization)
+PUT {{DevFreela.API_HostAddress}}/projects/1/start
+Authorization: Bearer {{JwtToken}}
+
+### Complete a project (requires authorization)
+PUT {{DevFreela.API_HostAddress}}/projects/1/complete
+Authorization: Bearer {{JwtToken}}
+
+### Add a comment to a project (requires authorization)
+POST {{DevFreela.API_HostAddress}}/projects/1/comments
+Authorization: Bearer {{JwtToken}}
+Content-Type: application/json
+
+{
+  "content": "This is a comment on the project",
+  "idProject": 1,
+  "idUser": 2
+}
+
+### Request Password Recovery
+POST {{DevFreela.API_HostAddress}}/users/password-recovery/request
+Content-Type: application/json
+
+{
+  "email": "xihisa5599@fenxz.com"
+}
+
+### Validate Recovery Code
+POST {{DevFreela.API_HostAddress}}/users/password-recovery/validate
+Content-Type: application/json
+
+{
+  "email": "xihisa5599@fenxz.com",
+  "code": "467001"
+}
+
+### Change Password
+POST {{DevFreela.API_HostAddress}}/users/password-recovery/change
+Content-Type: application/json
+
+{
+  "email": "xihisa5599@fenxz.com",
+  "code": "467001",
+  "newPassword": "newStrongPassword123"
+}

@@ -1,0 +1,115 @@
+O que é Arquitetura de Software
+
+° De maneiras simples, arquitetura no contexto de software se refere a construir um sistema para um cliente
+° Também de é descrita como composição, integração e interação de componentes em um sistema
+° Desse ponto de vista, todo sistema tem uma arquitetura de software. Porém, é de entendimento comum que existem arquiteturas boas e arquitetura não tao boas.
+° Algo que será discutido mais para frente no curso é sobre as consequencias de uma má arquitetura de software, como:
+	° Dificuldade em se entender
+	° Dificuldade em se modificar
+° Isso resulta em entregas mais lentas e com maior indice de defeitos
+° Por outro lado, uma arquitetura resulta em sistemas mais faceis de entender, com codigo e estrututa legiveis, e de melhor manutenção, resultando em entregas mais rapidas e com menos bugs
+° Existia a norma 1471 ANSE/IEEE que define arquitetura de software desde setembro de 2000
+	° "Recommended practice for arquitectural description of software-intensive systems"
+° Foi substituido pela norma ISO/IEC 42010
+	° Mais detalhes sobre ela em https://www.iso.org/stander/45991.html
+° Embora a maior parte dos programadores não ligam para essas normas, existem muitas informações interessantes nela aplicáveis em nossos projetos
+
+
+Arquitetura: Construção vs Software
+
+Construção vs software
+° Pelo termo similar, é comum associarmos Arquitetura de Software a Arquitetura relacionada à construção civil
+° Uma diferença fundamental é a respeito ao processo de planejamento e execução de ambas arquiteturas
+	° Na construção civil, existe um imenso trabalho de desenho da arquitetura ANTES de sua execução, com planos detalhados. Nela também os seus artefatos são caros e complexos, dificultando muito uma mudança em tempo-real no projeto aprovado
+	° Já o planejamento e desenvolvimento de Software, os requisitos são constantemente definidos e refinados ( e até removidos), exigindo agilidade que não pode ser comparada à arquitetura da construção civil
+	
+	
+Identificação de Requisitos
+° As funções de um sistema são difinidas através de um conjunto de requisitos
+° Esses requisitos podem influencias a arquitetura de sistema
+	° Requisitos funcionais
+		° Define uma função necessarias do sistema
+		° Uma função é descrita atraves de entrada, comportamento, e saida
+		° Geralmente falta uma descricao mais detalhada do comportamento esperado das funções de sistema
+			° E se a internet estiver instável? Como trabalhar com timeouts?
+			° E se o banco de dados estiver fora do ar?
+			° E se o usuário digitar um CEP no formato errado?
+	° Requisitos não-funcionais
+		° Define um atributo do sistema que foi explicitamente solicitado por algum dos stakeholders
+		° Alguns exemplos
+			° Escalabilidade
+			° Segurança
+			° Acessibilidade
+		° Pode influenciar nas tecnologias utilizadas no projeto
+° Sobre identificação de requisitos
+	° Não importa o quanto perguntamos aos clientes, ou o quanto buscamos detalhar e escrever "na pedra" o requisito, sempre vai ter algo esquecido, omitido ou mal comunicado em relação ao requisito
+	° Utilização da mesma linguagem entre analistas de negocio e desenvolvedores ajuda a reduzir a confusão: linguagem ubiqua.
+
+
+Arquitetura: Software vs Waterfall
+
+° Upfront Architecture (Architetura Adiantada/Antecipada)
+	° Definicação da arquitetura do sistema completa e definitiva antes de se iniciar o projeto
+	° Programação nesse modelo é visto apenas como a implementação das ideias definidas em instruções de software
+	
+° Modelo Waterfall
+	° Datado da decada de 1970, define uma sequencia de frases para o desenvolvimento de software
+	° Cada fase precisa estar completa antes de avançar para a proxima
+	° São elas:
+		° Definição de Requisitos
+		° Desenho
+		° Implementação
+		° Verificação
+		° Manutenção
+	° O problema não está nas atividades relacionadas, já que elas fazem parte do movimento de qualquer software, mas sim no foco em planejamento, com a criação de orçamentos e calendarios de entregas
+	° A maior parte dos projetos ultrapassam o orçamentos e prazos, muitras vezes até entregando funcionalidades que nao atendem os requisitos definidos
+	° Falha em se adaptar à dinamica normal de criação de software
+	° A realidade é difirente
+		° Requisitos mudam muito rapido, muitas vezes sendo criados novos e até removidos alguns que se acredita agregar valor no projeto
+		° Por essa razão, o modelo Waterfall não atende aos cenarios modernos de software por ignorar a dinamica do desenvolvimento de software e focar excessivamente em planejamento
+		
+	
+Arquitetura Emergente (Emerging Architecture)
+
+° Quando antes do time começar a desenvolver, mais cedo vai conseguir feedback e melhorar a qualidade do software
+° É Comum que em projetos de software se tenha uma arquitetura inicial similar a outros projetos da empresa, como um boilerplate
+° A Arquitetura deve suportar alterações frequentes e entrega o valor acelerada
+° Arquitetura Emergente (ou Emerging Architecture) é o processo composto pela construção incremental do software
+° Após o inicio, o projeto passa por diversas iterações compostas por frases do desenvolvimento de software, como desenho, implementação e teste
+° Alinhado com principios de metodologias ageis, a cada iteração é entregue o software funcional e que pode ser validado
+° O processo é repetido até que todos os requisitos sejam atendidos
+° As frases mais comuns nessas iterações são:
+	° Análise
+	° Desenho
+	° Implementação
+	° Teste
+° Quando um projeto que utiliza metodologias ageis é iniciado, apenas alguns requisitos são definidos, sendo refinados ou surgindo novos ao longo do projeto
+° No inicio de cada iteração (ou sprint) os requisitos a serem implementados são definidos, e no final uma entrega de software funcional é feita
+° Durante a avaliação das entregas e dos requisitos, refatorações podem ser necessarias
+° O periodo de cada iteração geralmente é de duas semanas
+
+
+Arquiteto de software e suas responsabilidades
+
+° Profissional responsavel por unir os requisitos e a especificações do sistema
+° Responsavel pela arquitetura do sistema
+° Interage com analistas de neogicio e gerente de projeto, avaliando e recomendando opcores de soluçoes para o projeto, além de coordenar um time de programadores
+° Principais responsabilidades
+	° Identificação de requisitos
+	° Divisao do sistema em componentes
+		° O desenho da solução é influenciado pelos requisitos
+	° Identificação e avaliação de tecnologias
+		° O arquiteto deve conhecer os custos e beneficios associados a diferentes tecnologias e produtos, propondo o uso de algum(s) deles em cenarios beneficos ao projeto
+	° Formular especificações
+		° Forma de comunicar as decisoes arquiteturais ao time de desenvolvimento
+		° Alguns formatos comumentes utilizados são os diagramas UML, documentos de Word, wikis, etc
+		
+
+Mito sobre Arquiteto de software
+
+° Um grande mito existente no mercado é que o Arquiteto de Software não deveria escrever codigo
+° Na minha opiniao, arquitetos não deveriam estar em um patamar diferente dos programadores em equipes de desenvolvimento
+° São profissionais bons e experientes, que tem grande exposicao a codigo, e que após a definicao do desenho do sistema trabalham juntos com os programadores para garantir a implementação adequada
+° Logo, arquitetos são programadores com maior experiencia e formação
+° No final, quanto mais experiente um programador é, mais comumente ele discuta sobre desennhos da solucao, boas praticas de escrita de codigo, escolha de ferramenta, entre outro topicos
+° A evolucao para um perfil de Arquiteto de Software acaba sendo natural na carreira de programadores

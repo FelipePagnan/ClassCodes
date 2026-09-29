@@ -1,0 +1,14 @@
+Sucesso em projetos de software
+
+° Uma pergunta que parece ser simples mas ao mesmo tempo completa é "O que é sucesso em um projeto de software"
+	° Um projeto que utiliza más praticas mas entrega as funcionalidades prometidas?
+	° Um projeto que utiliza as melhores praticas mas com funcionalidades que nao atendem o que cliente precisa?
+° Um projeto de software bem-sucedido entrega uma solucao funcional a necessidades do negocio
+° Um desenho de software bem-sucedido utiliza as melhores praticas em desenho de codigo e arquiteturam atraves das tecnologias disponiveis, para entregar o projeto de software
+° É claro que o software deve atender as necessidades do negocio, mas software de má qualidade é algo que deve ser evitado a todo custo
+° Software de má qualidade pode causar danos financeiros de diversas formas às empresas
+	° Paginas lentas que afastam usuarios (antes mesmo de entrar no site)
+	° Interface de usuário ruim que resulta em má usabilidade e fluxos ruins para o usuario utilizar os servicos disponiveis
+	° Falta de resiliencia em situações de falhas de componentes terceiros de arquitetura
+° Por que a maioria dos projetos de software atingem as expectativas
+	° Big Ball of Mud
