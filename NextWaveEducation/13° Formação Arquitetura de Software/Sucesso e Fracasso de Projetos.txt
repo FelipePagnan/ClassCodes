@@ -12,3 +12,144 @@ Sucesso em projetos de software
 	° Falta de resiliencia em situações de falhas de componentes terceiros de arquitetura
 ° Por que a maioria dos projetos de software atingem as expectativas
 	° Big Ball of Mud
+	
+
+O que é Big Ball of Mud
+
+° Software que cresce de maneira descontrolada, resultando em software que é dificil de se manter
+° Não apresenta estrutura clara em sua maior parte, contendo diversos componentes altamente acoplados entre si, além de duplicações de código, e pouca separação
+° É comum se encontrar sistemas que foram desenvolvidas de maneira acelerada e que, após alguns ajustes descuidados, "atendeu" o seu objetivo, se tornando um sistema legado a ser mantido (e temido)
+° É uma ameaça constante de projetos de software que crescem mais que um certo tamanho, e entre suas causas mais conhecidas estão a falta de alinhamento nos requisitos e prazos apertados
+
+
+Causas da Big Ball of Mud
+
+° A Big Ball of Mud não inicia grande causando danos irreversiveias ao projeto
+° Existem algumas causas raizes possiveis do Big Ball of Mud
+° O software tem uma serie de objetivos, expressados atraves do que o cliente quer alcançar, e quais problema quer resolver
+° O problema aqui ocorre na transformação de requisitos expressados para funcionalidades implementadas em código
+° Diferente stakeholders têm diferentes objetivos e visões do que o sistema deve alcançar e suas prioridades
+° Dos objetivos de diferentes stakeholders em relação ao sistema, uma lista deve ser definida para validação
+° Algumas funcionalidades precisarão ser cortadas, e isso é normal, mas isso precisará ser justificado
+° O desenvolvimento de funcionalidades, no geral, ocorre a partir de um entendimento incompleto dos requisitos. Em uma abordagem Agile, isso é normal, e até desejavel que esperar pela compreensão completa e o desenvolvimento da solução perfeita
+° Um problema comum é que profissioanis de negocio, no geral, acreditam que adicionar novas ou adaptar existentes pode ser feitos através de um estalar de dedos
+° Adapatações geralmente são necessárias, mas como não são previstas, acabam sendo feitas de maneira descuidada a apressada
+° Isso significa, na pratica, a falta de atividades como refatoração apropriada, escrita de testes, documentação e debugging
+° A área de negócio sempre vai querer saber exatamente em qual dia a funcionalidade vai ser entregue, focando sempre em expressões de alto de nível
+° Um exemplo claro é: o usuário precisa se autenticar no sistema para usar.
+° Como programadores, sabemos que isso é bem impreciso, faltam detalhes... será que preciso me conectar com o AD da empresa? Azure AD? Terá trabalho extra de infra? E sobre redes sociais, precisamos dar suporte a isso no login?
+° Um problema comum é que profissionais de negócio, no geral acreditam que adicionar novas funcionalidades, ou adaptar existente pode ser feito através de um estalar de dedos
+° Adapatações geralmente são necessárias, mas como não são previstas, acabam sendo feitas de maneiras descuidada e apressada
+° Isso significa, na pratica, a falta de atividades como refatoração apropriada, escrita de testes, documentação e debugging
+° Diversos detalhes e observações surgem a cada apresentação de versoes iniciais
+° A realidade é que queremos os detalhes EXATOS dos pontos que precisamos implementar
+° Não é possivel fazer uma estimativa precisa sem detalhamento dos requisitos
+° Especificar "depende" e "se" ao estimar, esclarecendo quais pontos atencao existem
+
+
+Falta de testes
+
+° Diversos niveis de testes podem exister em um projeto
+	° Testes unitarios para verificar o comportamento de componentes individuais de codigo
+	° Testes de integração para verificar o comportamento dos componentes macros quando inseridos em um ambiente com componentes de infraestrutura, como banco de dados e serviços de nuvem
+	° Testes de aceitação que validam o caminho real da aplicação, interagindo geralmente com um browser de maneira automatizada
+° Todos esses tipos de testes contribuem na validacao da implementacao de requisitos definidos no projeto
+° Em projetos com diversas empresas contratas atuantes, é comum ocorrer falta de responsavilidade pelo projeto
+° Talvez uma empresa seja contratada para realizar integração com um servico especifico, como SAP, e outra pra desenvolver a aplicação como um todo
+° E sobre o codigo de integração com SAP, a empresa talvez só queira termina a tarefa, sem pensar em padrões adotados no projeto
+° Por outro lado, os desenvolvedores da empresa acreditam que por ser responsavel pela integração com SAP, a outra empresa deveria também garantir a qualidade, e não vão mexer neste código
+° E nesse vai e volta de acusações, o codigo segue crescendo, de maneira desordenada, e quando terminada a tarefa de integração, ninguem quer mexer no codigo
+° Problemas tecnicos sao comun durante o desenvolvimento de projetos
+° Alguns levam de dias ate semenas para serem resolvidos, compromentendo prazo e até outros aspectos do sistema, como segurança, confiabilidade, consistencia de dados, estabilidade, etc
+° Ignorar esses tipos de problemas, colocando "embaixo do tapete" vao causar mais problemas do que beneficios, ja que se junta em uma bola de neve e que se tivesse iniciado antes a solucao, se reduziria os danos
+
+
+Custo de código: Bom X Ruim
+
+° Embora muitos projetos sobrevivam, mesmo com codigo ruim, é inegavel que os danos financeiros causados são muito  grandes
+° Nesse contexto, codigo ruim é mais caro que codigo bom
+° Por mais que sair copiando e colando codigo codigo pelo projeto, pular escrita de testes, falta de revisao de codigo e muito mais, de a impressao de aceleracao de projeto, sso ocorre apenas no curto prazo
+° Projetos que durarem mais que o curto prazo vão sofrer da falta de qualidade nas atividades comuns de escrita de código
+	° Debugging
+	° Solução de bugs
+	° Manutenção e evolução de código
+° Codigo que "apenas funciona" é mais barato de desenvolver, mas muito mais caro para manter e evoluir
+
+
+Ferramentas de checagem de codigo
+
+° Uma boa manutencao de codigo é alcançada atravez de codigo bem escrito. Isso inclui conhecimento de principios de desenvolvimento, bons padroes e praticas de projeto, testabilidade e recursos de linguagem
+° É necessario reforçar a melhora de codigo de maneira conitnua, nao apenas nos famosos TODOs (que estao mais para "TODO sempre")
+° Para isso, utilizar ferramentas de suporte e checagem de codigo é essencial
+° Ferramentas de suporte a codigo incluem as que ja vem em algumas IDEs. Funcionalidades como auto-complete, atalhos para geracao de codigo, nomenclatura de variaveis, entre outros, estao incluidas nessas ferramentas
+° O exemplo mais popular deste tipo de ferramento é o ReSharper, que alem das funcionalidades anteriores tambem inclui excelente funcao de refatoração
+° Ja as ferramentas de checagem de codigo auxiliam bastante na analise do seu codigo, dectatando uma grande quantidade de itens de atençao no seu projeto, como
+	° Bugs
+	° Code Smells
+	° Indice de manutençao e confiabilidade
+	° Cobertura de codigo
+	° Duplicação de codigo
+° O SonarQube/SonarCloud é uma ferramenta bem popula de checagem de codigo, analisando os pontos tratados anteriormente, alem de oferecer remediacao nos erros apresentados
+° Tambem permite criar Quality Gates baseados nas metricas criadas, definindo entao um padrao minimo para o codigo "passar" na avaliacao
+° Finalmente, é possivel tambem realizar analise de codigo apenas com um Pull Request, garantindo tambem que o codigo esteja aderente aos padroes de qualidade adotas antes de ser feito a incorporação dele
+
+
+O que é code Review
+
+° O code review, ou revisao de codigo, é uma avaliacao sistematica de codigo produzido  seguindo uma serie de parametros definidos
+	° Idealmente, que estejam documentados, para facilitar o processo
+° Basicamente, o processo do code review segue o seguinte fluxos
+	° Uma pessoa se torna revisor de codigo do autor, de uma tarefa
+	° Ela analisa o codigo em busca de inconsistencias aos padroes, e tambem de potencias problemas de performance, segurança, etc
+	° Feedback é adinionado atraves de ferramenta, e repassado ao autor
+	
+Boa pratica em Code Review
+	
+° É uma boa pratica ter um documento para guiar o processo
+	° Oferece valor tanto para quem vai revisar, quanto para quem vai desenvolver
+	° Sem ele, é mais comum que programadores cometam erros que ja foram submetidos a Code Reviews anteriores, e quem não foram documentados. Além disso, revisores podem ficar sem um "norte"   irem mais por intuição do que um padrao adotado pela equipe, resultando em revisores menos assertivas e atritos
+	
+Beneficios de Code Review
+	
+° Maior qualidade de codigo
+	° Fazer com que o codigo produzido pela equipe passe pelo processo de Code Review resulta em maior qualidade deste. Ele auxilia, entre outras coisas, a
+		° Produzir codigo com uso de melhores praticas
+		° Remover codigo desnecessario ou não utilizado
+		° Melhorar a legibilidade
+° Cultura de compartilhamento de conhecimento e feedback
+	° Com o tempo, os Code Reviews afetam muito positivamente na distruibuição de conhecimento. Tanto o autor quanto o revisor aprendem sobre diversos assuntos nesse processo, como convençoes do time, desenho de sistema, algoritmos, etc
+	° Alem disso, desenvolvedores novos aprendem muito mais rapido sobre o padrao da equipe.
+	° Imagina você acabar de chegar em uma equipe, ter seu trabalho revisado. aprender a partir disso e poder contribuir com a qualidade do projeto? Fascinante, não?
+° Evita o surgimento de salvadores da patria
+	° Com a revisao do codigo, evita-se que uma pessoa seja a detentora universal de uma unica solucao, sendo a unica capaz de resolver problemas nos modulos desta. E se essa pessoa ficar doente ou sair da empresa?
+	° Diferentes membros da equipe terao conhecimento sobre os modulos que estao sendo desenvolvidos, e isso contribui para um ambiente mais saudavel
+	
+Obstaculos ao Code Review	
+	
+° Prazos curtos
+	° Se prazos curtos são a norma no projeto, é muito dificil converser a gerencia sobre a importancia deles a justificar o tempo adicional ao final das tarefas para garantir a revisao do codigo
+	° Apresentar os beneficios, nesse caso!
+° Fator humano
+	° Alguns programadores não lidam bem com feedbacks sobre seu codigo
+	° Alguns programadores não ligam de fazer o Code Review direito
+° Falta de entendimento do dominio/projeto
+	° A tarefa de revisar codigo e chega por problemas de desalinhamento ao padrao adotado, ou de segurança, fragilidade e performance fica vem complicada quando nao se conhece o dominio nem os componentes da aplicacao
+	° Algumas acoes para contornar isso
+		° Adocao de Pair Programming para que os menos experientes evoluem com a ajuda dos mais experientes
+		° Documentao da arquitetura e padroes dos componentes
+		
+
+O que é Codigo Legado
+
+° Codigo existente que herdamos e que precisamos manter, dar suporte ou simplesmente integrar com outro sistema
+° Geralmente dificil de se substituir, ja que negocios inteiros foram e sao construidos atraves de tecnologias que hoje em dia é considerada "ultrapasssada"
+° O maior problema é realizar manutenções ou evoluções nesse software
+° Porem, algo que poucos porgramadores se atentam é que é possivel melhorar o codigo legado: atravez da refatoração
+° Para isso, é necessario entender quais tecnicas existem para refatorar codigo, isto é, realizar melhorias na quqliade dele sem afetar a funcionalidade implementada
+° E é exatamente o medo de "quebrar tudo" que impede a maioria dos programadores de tentar melhorar
+° O livro "Trabalho Eficaz com Codigo Legado" é fantastico para isso, apresentando diversas informações e tecnicas para refatorar o codigo legado, em diversas sistuações
+° Passos para melhorar um codigo legado
+	° Parar a escrita de novo codigo
+	° Refatorar o codigo, separando em componentes
+	° Cobrir com testes, para dar segurança nas proximas refatorações
+	° Refatorações continuas
