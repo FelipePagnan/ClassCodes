@@ -1,0 +1,106 @@
+Orientacao a Objetos
+
+° Antes do conceito de Orientacao a Objetos existir, a programação era procedural
+° Isso resultava em um grande fluxo de codigo contendo rotinas que executavam os passos necessarios
+° Com o surgimento da OO, começou a ser possivel criar programas atravez de interações entre os objetos, com seus dedos e comportamentos proprios
+° Entre as atividades envolvidas no desengo orientado a objetos estão
+	° Identificar objetos
+	° Extrair classes a partir deles
+	° Definir interfaces e heranças
+	° Estabelecer relacionamento entre eles
+° Topico muito comum em entrevistas para cargos de programador, tanto nacionais quanto internacionais 
+
+
+Extrair classes
+
+° Antes mesmo de chegarmos ao tema de extração de classes, algo essencial é a identificação de objetos
+° Quando se fala de Orientacao a Objetos, é comum se dizer que o mundo a nossa volta tem "objetos", como caixas eletronicos, mesas, ou pessoas
+° Classes são utilizadas para associar objetos identificados para o dominio do software
+° A partir dos requisitos e casos de uso são extraidas as hierarquias de classes e seus relacionamentos
+° Uma abordagem comum para identificação de objetos é atraves da narrativa apresentada nos casos de uso, onde seriam identificados os substantivos e verbos
+° Substantivos dariam origem a classes ou propriedades, e verbos a métodos
+° Exemplo a seguir
+° Para viasualizar os pedidos de delivery feitos por um cliente, o funcionarios digita seu CPF. Se um cliente exister, seu nome, endereco, data de nascimento e pedidos sao mostrados pelo programa. Se nao, uma mensagem de erro sera mostrada. Para cada pedido é mostrado o restaurente, data e valor
+° Classe: pedido (de delivery), cliente, funcionario
+° Casos de uso: Visualizar pedidos de delivery por cliente
+
+
+Interface
+
+° Toda vez que utilizamos uma classe, criamos um acoplamento do codigo consumidor e a classe
+° Caso a classe esteja indisponivel, o codigo nao complita
+° Por exemplo, imagine uma classe UserService com metodo GetUserConfiguration, que obtem uma configuracao padrao de usuario da cache, e se nao existir, obtem do repositorio de dados e salva no cache
+° Caching é um cross-cutting concern, que corresponde a funcionalidade que nao esteja associada a requisitos especifico da classe
+° Alguns outros exemplos de cross-cutting concerns são autenticacao logging, validacao, e threading
+° Para esses casos, para evitar acoplamento, a decomposicao dessas responsabilidades pode ser feito com o uso de padroes como Dependency Injection ou Service Locator
+° Um passo a passo para realizar essa decomposiccao é:
+	° Extrair uma interface a partir da classe
+	° Utilizar a interface extraida no codigo-fonte consumidor, atraves de injeção de dependencia
+° Com a decomposicao feita, será possivel que a classe UserService possa trabalhar com qualquer implementacao do ICacheService, resultando em desacomplamento e tambem permitindo a escrita de testes unitarios.
+
+
+Os 4 Pilares da Orientacao a objetos
+
+° Os quatros pilares dee Programcao Orientada a Objetos são:
+	° Abstracao
+	° Encapsulamento
+	° Heranca
+	° Polimorfismo
+° Pergunta muito comum em entrevistas: quais sao os pilares da POO e o que cada um significa
+
+Abstracao
+° Tecnica que permite esconder do codigo consumidor/cliente detalges de implementacao, atraves do agrupamento de caracteristicas e comportamentos relacionados
+° Resulta na separacao do codigo para um metodo ou classe separados
+° Auxilia na melhoria da qualidade e legibilidade do codigo, por separar responsabilidades da aplicacao
+° Exemplo
+	° Em um serviço de aplicacao implementados o caso de uso CadastrarAluno
+	° Nao somente a persistencia é feita, mas tambem operacoes como sincronizacao com ERP atraves de HTTP, salvamento de dados em cache, e publicacao de mensagem em fila
+	° Se todas essas funcionalidades estiveram implementadas diretamente no serviço, o codigo vai ser dificil manutencao e pouco testavel
+	° Ao inves disso, podemos extrair classe (e em seguida, interfaces) contendo codigos responsavel por persistencia, mensageria, chamadas HTTP e caching
+	° Com isso, o codigo se torma mais limpa e testavel
+	
+Encapsulamento
+° Tecnica que permite controlar o acesso de codigo cliente a dados e comportamentos internos de uma classe
+° Em diversas linguagens, isso é realizado atraves de modificadores de acesso
+° Alguns exemplos de modificadores de acesso são: public, protected, private
+° Definiçoes
+	° Public: o acesso não é restrito
+	° Protected: o acesso é limitado à classe que contem ou aos seus tipos derivados
+	° Private: o acesso é limitado à propria classe
+° No geral, é interessante deixar metodos que nao vao ser expostos ao exterior com modificador de acesso private, facilitando a refatoracao posterior e evitando quebras
+
+Heranca
+° Tecnica que permite reutilizar, estender e modificar outras classes
+° A classe que é herdada é comumente chamada de classe base ou paim e a classe que herda é chamada de derivada ou filha
+° Afetada por modigicadores de acesso que estejam aplicados à classe base
+° Exemplo:
+	° Em um sistema que realiza notificação por e-mail e SMS, existe uma classe base Notificação
+	° Porem, existem diferença entre a formatacao e campos necessarios para uma notificação em e-mail, como por exemplo um Assunto, e maiores personalizções do que uma por SMS
+	° Nesse caso, seria possivel utilizar a classe base Notificacao, que seria propriedades de Remetente, Destinatario e conteudo
+	° E se estenderia atraves de classe NotificacaoEmail e NotificacaoSms, que teriam suas propriedades e maneiras de formatar a mensagem
+	
+Polimorfismo
+° Tecnica que permite objetos de classes derivas se comportem de maneira diferente ao da classe base para o mesmo metodo
+° Ou seja, objetos de mesmo "pai" poderao ter particularidades no momente de executar um comportamento em comum
+° Em C#, por exemplo, isso é feito atraves de palavras-chave virtual e override, sendo a primeira q que define os comportamentos que podem ser alterados no classe derivada
+° Ja override é responsavel pela implementacao na classe derivada
+° Exemplo
+	° Ainda no sistema de notificação, poderia existir um metodo FormatarMensagem na classe base Notificação
+	° Esse metodo seria implementado pelas classes filhas NotificacaoEmail NotificacaoSms
+	° Seria possivel entao percorrer uma lista de notificação de tipo notificação, que incluiria ambos tipos, e chamar o metodo FormatarMensagem sem espeficicar nada mais
+	
+	
+Heranca - Composicao
+
+° Muito se fala sobre reusabilidade, sendo esta um grande aspecto da programacao orientada a objetos
+° Um problema encontrado atraves do uso de heranca foi o fato de que nem sempre a classe que herda seria realmente adequada para uma herança
+° É importante lembrar que quando se gerda, a classe derivada pode ser tuilizada no contexto em que a classe pai seria aceita, coisa que nem sempre nos lembramos quando herdamos com o objeto de reusabilidade
+° Garantir que o comportamento e relacionamentos certos entre objetos ocorram é nossa funcao como programador
+° Existem duas opçoes para reusabilidade
+	° Heranca: Caixa branca
+	° Composicao: Caixa preta
+° Na composicao, uma instancia da classe a ser reutilizada é mantida dentro da nova classe, geralmente com um modificador de acesso privado
+° A classe nova funciona como wrapper, definindo um contrato e delegando chamadas para a instancia da classe reutilizada
+° Exemplo
+	° Com uso de repositorio de dados genericos atraves de composicao se garante de que classes que nao precisem de comportamentos como insercao, remocao ou atualizacao nao oferecam acesso a eles diretamente
+	° Com isso, se utiliza a instancia do repositorio generico internamente e se expoe apenas os metodos necessarios, definidos na interface
