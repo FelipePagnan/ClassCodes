@@ -61,7 +61,7 @@ Liskov's Substitution Principle (LSP)
 ° Um exemplo clássico é o do quadrado e retângulo
     ° De cara, não seria estranho derivar um Quadrado a partir de um codigo retangulo. Afinal, eles são similires, logo o quadrado seria um tipo especial de retangulo, só que os lados iguais!
     ° Porém, se um método lida com um Retangulo e receber um Quadrago, poderá disparar alguma validação no Quadrado, como a obrigatoriedade de seus lados ser iguais
-° E se um novo algoritmo para cáçculo da nota for adicionado ?
+° E se um novo algoritmo para calculo da nota for adicionado ?
 ° Talvez o programador quisesse se utilizar da herança para domonior sei trabalho, ja que a classe original inclui informações como Subject, Semester e Year.
 ° Porém, isso vai resultar em um problema no desenha da solução
 ° O que podemos fazer?
@@ -92,4 +92,15 @@ Dependency Inversion Principle (DIP)
 ° Caso a classe e seus metodos tenham dependências em um componente externo e sua implementação, seria necessario seguir dois passos para melhorar o desenha da solução, aderindo ao Dependency Inversion Principle (DIP)
     1. Extrair uma interface a partir da implementação do componente
     2. Utilizar a interface no lugar implementaçao
+° Vamos utilizar em nosso exemplo um serviço de camada de aplicação responsável pela implementação de casos de uso relacionados a Pessoa
+° Vamos focar na funcionalidade de cadastro de Pessoa. Nela, temos a dependência direta em componentes externos, como implementações de repositório, e integração com APIs externas e message broker
 
+Injeção de Dependência
+
+° No exemplo anterior da Dependency Inversion, utilizamos  a propria injeção de dependência, que é um padrão para a disponibilização de dependências à classe
+° Com isso, a classe não fica responsavel por gerenciar as suas dependências, recebendo-as pelo construtor
+° Um principio associado com a Dependency Inversion e a injeção de dependência é a Injeção de Dependência é a Inversão de Controle (IoC)
+° Um termo utilizado por Martin Fowler, como parte importante da Inversão de Controle, é o Hollywood Principle
+    ° Don't call us, we'll call you
+    ° De maneira prática, o framework seria o responsável por coordenar a chamada para uma classe e seu método, e não o seu proprio codigo
+    ° Visto em chamadas de Controller e de interfaces inseridas por Injeção de Dependência, em uma aplicação ASP.NET Core

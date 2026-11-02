@@ -1,0 +1,67 @@
+O que são Design Patterns
+
+° No contexto de Sofware, um padrão é uma abordagem para resolução de um problema de arquitetura ou implementação
+° Quando encontramos um problema durante o desenvolvimento de software, como dificuldade de se evoluir uma solução, vamos buscar por alguma solução validada
+° Por exemplo, essa solução pode ser tanto validada por alguma experiencia nossa, quanto por um conjunto em contexto mais amplo
+° Um padrão descreve um problema comum e descreve uma maneira de resolvê-lo utilizando uma abordagem replicável em diversas situações
+° Um Design Pattern, seguindo o conceito de padrão, descreve uma solução aplicável a problemas comuns encontrados durante implementaçao
+° Dependendo do contexto, vai necessitar de adaptação em seu uso
+° A referência principal quanto a design patterns é o GoF
+° O acrônimo GoF Significa Gang of Four, que representa os 4 autores do livre "Design Patterns: Elements of Reusable Object-Oriented Software"
+    ° Erich Gamma
+    ° Richard Helm
+    ° Ralph Johnson
+    ° John Vlissides
+° Permitem escrever código melhor, mais rápido, através de abordagem validadas através de experiencia em projetos
+° Promovem um código mais legível e de melhor manutenção
+° Oferecem uma linguagem comum aos programadores
+° Pontos importantes a esclarecer:
+    ° Design Patterns não salvam projetos afundados
+    ° Design Patterns são úteis, mas não oferecem muito mais do que isso (e está tudo bem)
+    ° Assim como outros padrões, Design Patterns não devem ser seguidos de maneira cega e inquestionável
+° Os problemas encontrados vão guiar qual Design Pattern utilizar, e não o contrário
+° Existem grandes chances de se existir um Design Pattern para resolver um problema de implementação que você estaja tendo
+° Mas não é necessario decorar absolutamente todos Design Patterns: o objetivo é, através do problema encontrado, buscar por um Design Pattern que resolve esse problema
+° Voce vai diretamente nele para entender os passos a seguir para alcançar seu objetivo
+° Embora seja interessanta ter familiariadade com todos os Design Patterns definidos, é importante entendermo que é mais importante ainda saber interpretar o problema raiz em nosso código, para então utilizar dessa informação para buscar a abordagem ideal para lidar com ele
+
+Os tipos de Design Patterns
+
+° Existem 26 Design Patterns divididos em 3 tipos principais
+    ° Creational
+        ° Padrões utilizados para criação de instâncias de Classes
+    ° Structural
+        ° Padrões utilizados para lidar com a estrutura e composição de classes, aumentando suas capacidades de maneira a manter o código bom boa manutenção
+    ° Behavioral
+        ° Lida com a comunicação e comportamento de uma classe em relação a outra
+
+° Creational
+    ° Factory Method
+    ° Abstract Factory
+    ° Builder
+    ° Singleton
+    ° Prototype
+    ° Object Pool
+
+° Structural
+    ° Adapter
+    ° Bridge
+    ° Composite
+    ° Decorator
+    ° Facade
+    ° Flyweight
+    ° Private Class Data
+    ° Proxy
+
+° Behavioral
+    ° Chain of Responsibility
+    ° Command
+    ° Interpreter
+    ° Mediator
+    ° Memento
+    ° Null Object
+    ° Observer
+    ° State
+    ° Stategy
+    ° Template Method
+    ° Visitor
