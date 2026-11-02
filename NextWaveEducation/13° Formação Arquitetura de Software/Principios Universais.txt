@@ -1,1 +1,80 @@
 Codigo Spanghetti X Lasagna
+
+° Códigos procedurais, baseados em grande fluxos de códigos baseados em comandos GOTO, com monte de saltos e retornos, são conhecidos como códigos spaghetti
+° Com a programção estruturada, conceitos como pates reusáveis foram inseridos, permitindo a criação de código mais legível
+° Com isso, começou a surgir projetos estruturados em camadas, e disso veio o termo código lasagna
+° Durante a escrita de código é comum ocorrerem refatorações para um desenho que faça mais sentido e que seja mais reusável e legível
+° Com isso, uma abordagem de desenvolvimento e manutenção de software devido a ambientes dinâmicas em empresas e com o apoio de metodologias ágeis
+° Porém, sempre lembrar que essa agilidade não pode comprometer boas praticas e principios
+° E que mesmo com linguagens que oferecem suporte a orientação a objetos podem ser tulizadas de forma a criar códigos que seja de manutenção ruim, altamente acoplado e ilegível
+
+Coesão e acoplamento
+
+° Coesão se refere a quão relacionados estão as responsabilidades implementadas em uma classe ou módulo
+° Ela pode ser alta ou baixa, e o ideal é que seja a mais alta póssivel
+° Classes ou módulos coesos resultam em uma melhor manutenção e reusabilidade por terem menos dependências, no geral
+° Classes ou módulos POCUCO coesos resultam em menor legibilidade e compreensão das responsabilidades de classes ou módulos, tornando a manutenção mais dificil
+° No cenario ideal, classes são especilizadas e focadas em um conjunto pequene de responsabilidades coesas
+° O principio SOLID do Singles Responsability está diretamente relacionado com o conceito de coesão, já que classes com uma única responsabilidade são coesas
+° Acoplamento se refere ao grau de dependência entre classes ou módulos
+° Uma classe está acoplada a outra quando é necessário modificá-la quando alguma alteração for feita em sua dependência, resultando em código que não compila
+° O acoplamento também pode ser alto ou baixo, sendo baixo o ideal
+° Exemplo >
+° Se a assinatura do construtor mudar, ou se a outra implementação de cache for utilizada, a classe UserService ficará quebrada, sendo necessárias alterações
+° Módulos e classes devem ainda se comunicar entre si, mas através de interface estáveis, Vai ser falado mais para frente sobre Dependency Inversion e sua importancia, mas está relacionada ao conceito de acoplamento
+° A testabilidade também é impactada negativamente pelo alto acoplamento
+° Nosso alvo, nódigo escrito, é ter baixo acoplamento e alta coesão
+° Com isso, teremos melhor legibilidade, testabilidade, reusabilidade e manutenção
+
+Separação de responsabilidades
+
+° Ao aplicar o princípio de Separação de responsabilidades conseguimos alcançar um código de menor acoplamento e maior coesão
+° Responsabilidades, neste caso, são partes de software, atribuídos a módulos que são criados ao se implementar funcionalidades
+° Por exemplo, lógica de negócio e casos de uso, e a apresentação são responsabilidades
+° Permite uma maior reusabilidade, diminuindo a duplicidade de código
+° A partir da criação de abstrações que encapsulam conceitos, permite uma maior reusabilidade, diminuindo a duplicidade de código
+° Também aplicado fortemente a nível de arquitetura, com um de seus grandes representantes sendo arquiteturas em camadas (como Arquitetura Limpa, com cada camda sendo responsável por um conjunto de responsabilidades)
+° Alguns principios que são proximamente relacionados são: Single Responsability Principle (SOLID), Don't Repeat Yourself (DRY)
+° Exemplos de fata de separação de Responsabilidades
+    ° Validação de dados de objetos diretamente misturada no caso de uso. 
+        Solução de Exemplo: Criar Validators, com Fluent Validation
+    ° Persistência de dados diretamente misturada no caso de uso. 
+        Solução de Exemplo: Repositories e utilizar sua interface
+    ° Publicação de mensagens diretamente misturada no caso de uso. 
+        Solução de exemplo: Criar serviço de Infraestrutura de Mensageria
+
+KISS - Keep It Simple, Stupid
+
+° Esse principio diz respeito a manter em nossas implementaçoes apenas o código que for necessário
+° Simplicidade é poder, principalmente considerando quão comum é ocorrer o chamado over-engineering, que aumento muito a complexidade sem tante necessidade dependendo do contexto
+° Quanto maior o over-engineering, maior a chance de se gerar débito técnico através da falta de compreensão do que aquela parte do código faz
+° Quanto mais simples estiver o codigo, mais facil vai ser de realizar manutenção e de identificar causas raízes
+° Isso impacta mesmo em ambientes ágeis, do ponto de vista empreendedor: para validar ideia é necessario agilidade e pratica com possiveis clientes
+° Já vi projetos que atrasam meses e meses a entrega de sua primeira versão entregue, só para descobrir que aquele conjunto de casos de uso não atendiam ao que realmente o mercado e cliente precisam
+° Nesses casos, em alguns deles identifiquei o preciosismo exagerado que acabou resultando em centenas de horas a mais de projeto para "deixar do jeito certo"
+° Lembrar que simplicidade não diz respeito a ignorar abstrações, que fazem parte dos fundamentos de desenhos de software de qualidade
+
+° O conceito de over-engineering não é universal e varia de projeto para projeto, e também de nivel, como arquitetural (Solução ou software) ou mesmo de codigo
+
+DRY - Don't Repeat Yourself
+
+° Esse principio diz respeito a evitar duplicacao de codigo
+° Também se refere a outros aspectos de duplicação, como em documentação, modelos de dados, etc
+° A duplicacao resulta em riscos para o desenvolvimento do projeto, já que possibilita que a correção de bufs não afete todos os clientes de uma logica em especifica
+° Uma alteração de codigo deve ser feita em um local e em nenhum outro mais
+° Um exemplo comum de repetição é no acesso a dados sem o uso de uma abstração comum
+° Se o banco de dados for alterado, um esforço consideravel será necessario para a refatoração da aplicação, com um risco alto de ser esquecido alguma parte do código
+° Outro exemplo é o construtor sem parâmetros, que não forca um estado padrao de inicialização do projeto, possubilitando inconsistencias e aumentando a chace de falhas e bugs
+° E se um campo novo obrigatório surgir? como reforçar com cada cliente da classe User para adicionar esse parâmetro?
+° Um construtor, ou em conjunto com um metodo Factory, ja seria suficiente para notificar os cliente da classe de que o contrato foi alterado e que um campo novo precisa ser passado
+
+YAGNI - You Aren't Gonna Need It
+
+° Principio que se relaciona bem com o KISS (Keep it simples, Stupid), e que diz respeito a evitar implementação de funcionalidades que não foram apresentadas entre os requisitos
+° É comum se encontrar métodos sem referencia ou comentario extensos e confusos sem projeto de todos os portes
+° É o famoso "Vai que um dia precisamos...", que em muitos cenários diminui a legibilidade de classes e módulos, além de influenciar em maior condificação, coberturas de testes e documentação
+° Além disso, se a funcionalidade nãp está entre os requisitos, existe uma chance graned de que detalhes importante não sejam conhecidos, resultando em desperdicio de tempo. Mesmo que seja necessário no futuro, provavelmente terá retrabalho
+° Não é uma regra escrita na pedra. Afinal, nosso software precisa ser extensível o suficiente para permitir novas implementaçoes, assim como mudanças de rumo
+° Já vi implementaçoes enormes de sincronização de dados com sistemas legados sendo feitas através de rotinas, apenas porque "esses sistemas vão ter que conversar entre si, então vamos adiantar"...
+° O problema? A conversa com a equipe de sistemas legados nunca andou para frente, além da burocracia na parte de Infraestrutura em permitir acessos a discos e mesmo de serviçoes na nuvem de acesso a arquivos
+° Resultado: dezenas de classes e milhares de linhas de código despediçados

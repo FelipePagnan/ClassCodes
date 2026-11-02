@@ -1,0 +1,95 @@
+Principios SOLID
+
+° Identificados por Robert C. Martin (Uncle Bob), esse são principios fundamentos para se escrever códigos mais limpo, legível e de melhor manutenção
+° Tiveramum grande impacto na maneira que se escreve software orientado a objetos
+° Assim como outros principios ja apresentados anteriormente, a importancia dos principios está em melhorar a qualidade do software através de suas aplicações
+° Entre os principios beneficios de se aplicar os principios SOLID estão:
+    ° Maior testabilidade
+    ° Menor acoplamento
+    ° Melhor organização
+° O acronimo SOLID represente os seguintes principios
+    ° Single Responsibility
+    ° Open/Closed
+    ° Liskov Substitution
+    ° Interface Segregation
+    ° Dependency Inversion
+    
+Single Responsibility
+
+° "There should never be more than one reason for a clss to change"
+° Em portugues simples, voce nao deveria ter mais de uma razao para alterar uma classe
+° Existem diversos beneficios em seguir este principio, como:
+    ° Menor acoplamento
+    ° Testabilidade
+    ° Manutenibilidade e legilidade
+    ° Menor acoplamento
+        ° Classes com menos responsabilidades tendem a ter menos dependências
+    ° Testabilidade
+        ° Classes com menos responsabilidades terão menos casos de teste para escrever, e maior simplicidade em fazê-limpo
+    ° Manutenibilidade e legilidade
+        ° Classes menores e mais organizadas são melhores de se manter e ler
+° É importante também não criar um monte de classes anêmicas, ou seja, classes apenas contendo propriedades ou pouquissimo comportamentos
+    ° Assim como na hora de avaliar a implementação de outros padrões e principios, bom senso é necessario ao realizar essa divisao de dados e comportamentos
+    ° São elas:
+        ° Mapeamento para uma entidade do domínio
+        ° Persistência dos dados atrés de um serviço a um ERP
+        ° Publicação de um evento de cadastro realizado, em uma fila do Azure Service Bus
+    ° Passos
+        ° Extrair Métodos
+        ° Extrair Classe
+        ° Extrair Interface
+        ° Utilizar a dependência para interface
+
+Open/Closed Principle (OCP)
+
+° "A module should be open for extensions but closed for modifications"
+° Em portugues simples, um módulo deve estar aberto para extensões mas fechado para modificações
+° Isso significa que uma classe deve ser extensinvel mas que, em caso de nova funcionalidades relacionadas, você deveria alterar o código existente
+° Este principio promove o uso de algumas técnicas, como interfaces e Composição
+° Vamos utilizar em nosso exemplo um serviçoe responsável por lidar com pagamentos de pedidos
+° Vamos focar na funcionalidade de processamento de um Pedido. Para isso, precisamos checar qual o método de pagamento utilizado para então saber como prosseguir
+° E se um novo método de pagamento surgir?
+° Será necessário estender a estrutura de condição if utilizada
+° Ou seja, a cada novo método de pagamento aceito, essa classe precisará ser constantemente alterada, resultando em uma classe com responsabilidade mais complexa e ponto de fragilidade
+° Uma alteração errada poderá afetar o processamento de todos meios de pagamento
+
+Liskov's Substitution Principle (LSP)
+
+° "Subclasses should be substitutable for their bases classes"
+° Em portugues simples, Subclasses deveriam ser substituiveis por suas classes bases
+° Esse principio pode ser violado atraves do mal uso de herança, onde uma classe derivada poderia suprimir condições em que a classe base é executada
+° Um exemplo clássico é o do quadrado e retângulo
+    ° De cara, não seria estranho derivar um Quadrado a partir de um codigo retangulo. Afinal, eles são similires, logo o quadrado seria um tipo especial de retangulo, só que os lados iguais!
+    ° Porém, se um método lida com um Retangulo e receber um Quadrago, poderá disparar alguma validação no Quadrado, como a obrigatoriedade de seus lados ser iguais
+° E se um novo algoritmo para cáçculo da nota for adicionado ?
+° Talvez o programador quisesse se utilizar da herança para domonior sei trabalho, ja que a classe original inclui informações como Subject, Semester e Year.
+° Porém, isso vai resultar em um problema no desenha da solução
+° O que podemos fazer?
+    ° Primeiramente, entender que são duas classes com métodos diferentes de calculos. Logo, não deveria ser possivel utiliza-las uma no lugar da outra em seus respectivos cenários de uso!
+    ° Podemos extrair uma interface comum, e se fazer com que cada uma a implemente
+
+Interface Segregation Principle
+
+° "Clients should not be forced to depend upon interface that they do not use"
+° Em portugues simples, clientes (de uma classe) não deveriam ser forçados a depender de interfaces que ele não utiliza
+° Quando temos interface com muitas definições, aumentamos as chances de classes que o implementam não necessitem de todas elas
+° Alguns métodos então nem seria implementados, sendo comum ver a exceção NotImplementedException (Padrão que o editor gera)
+° Vamos utilizar em nosso exemplo uma interface responsavel por definir métodos de um repositorio generico
+° Nele, diversos métodos são definidos, como de adição, atualização, e consulta, por exemplo
+° Nesse caso, o novo repositorio implementaria apenas os métodos GetAll e GetById, deixando os outros sem implementação
+° Segundo o ISP (Interface Segragation Principle), um caminho mais recomendado seria segregar a interface IRepository<T> em interfaces menores
+° Por exemplo, poderiam ser criadas 2 interfaces de repositório: 1 para métodos de leitura, e 1 para métodos de escrita
+
+Dependency Inversion Principle (DIP)
+
+° "High-level modules should not depend upon low-level modules. Both should depend upon abstractions"
+° Em portugues, módulos de alto nivel não devem depender de modulos de baixo nivel. Ambos devem depender de abstrações
+° É um padrão fundamental para outros padrões como Dependency Injection
+° Programe para interfaces e não para implementaçoes
+° Está diretamente relacionado a testabilidade de classes e metodos.
+    ° Se uma classe depende apenas de interfaces, é possivel utilizar ferramentas como o Moq ou NSubstitute para controlar o comportamento de metodos cuja implementação acessaria um recurso externo
+° Exemplos de recursos externos: bancos de dados, serviços na nuvem, APIs externas
+° Caso a classe e seus metodos tenham dependências em um componente externo e sua implementação, seria necessario seguir dois passos para melhorar o desenha da solução, aderindo ao Dependency Inversion Principle (DIP)
+    1. Extrair uma interface a partir da implementação do componente
+    2. Utilizar a interface no lugar implementaçao
+
