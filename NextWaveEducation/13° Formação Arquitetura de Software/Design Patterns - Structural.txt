@@ -1,0 +1,157 @@
+O que são Design Patterns de tipo Structural
+
+° Design Patterns que lidam com mecanismos de melhorar a estrutura de classes, tornando-as mais flexíveis e eficientes
+° Alguns exemplos disso são:
+    ° Adição de comportamentos a objetos;
+    ° Simplificar interação com bibliotecas, framework ou classes;
+    ° Colaboração de objetos de interfaces incompatíveis
+    ° Entre outros.
+° Adapter
+° Bridge
+° Composite
+° Decorator
+° Proxy
+° Facade
+° Flyweight
+
+Lembrete
+
+° Um padrão descreve um problema comum e descreve uma maneira de resolvê-lo utilizando uma abordagem replicável em diversas situações
+° Um design pattern, seguindo o conceito de padrão, descreve uma solução aplicável a problemas comuns encontrados durante a implementação
+° Dependendo do contexto, vai necessitar de adaptação em seu uso
+
+- Adapter
+
+O Problema
+
+° Colaboração entre objetos com interfaces incompatíveis entre si
+° Exemplos:
+    ° Integração com sistemas terceiros, que podem trabalhar com interfaces e até formatos diferentes (XML por exemplo), com sua aplicação trabalhando primeiramento com JSON
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Precisamos invocar um serviço terceiro para obter os dados de Boleto
+    ° Porém, o modelo retornado pelo serviço é incompatatível com nosso modelo, espeficicamento nos dados de boleto, com estrutura e nomenclaturas diferentes
+    ° Por conta disso, temos uma interface de interação com o sistema terceiro IExternalPaymentSlipService, e queremos usar nosso IPaymentSlipService para retornar os dados usando nosso modelo
+
+Sobre o Adapter
+
+° Propõe que a criação de um objeto Adapter (ou Adaptador), que será responsável por converter a interface de um objeto para outro
+° Ele funciona como um Wrapper, internamente delegando a chamada para o objeto existente, mas retornando na interface desejada pela aplicação
+° Padrão comum em uma Anti-Corruption Layer (Camada Anti-Corrupção, conceito relacionado ao Domain-Driven Design)
+
+- Decorator
+
+O Problema
+
+° Adição de novos comportamentos a objetos sem alterar o comportamento original, mantendo a separação de responsabilidade
+° Exemplo:
+    ° Toda vez que realizarmos uma ação (ou conjunto delas), precisamos enviar uma notificação
+    ° Toda vez que processamos um pedido notificamos um software CRM (Customer Relationship Management) para cadatra o cliente contendo dados da compra
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Não querendo alterar cada implementação de IPaymentSlipService para relizar a chamada
+° Propõe a criação de uma classe (Decorator) que vai "envelopar" a classe a ser estendida, através de Composição
+° O Decorator implementa a mesma interface que a classe original, adicionando comportamento antes ou depois da chamada do méotod original desejado
+
+- Facade
+
+O Problema
+
+° Utilização de bibliotecas, frameworks ou conjunto complexo de classes
+° Nesses casos, a utilização é dificultada por conta de configuração e inicialização de objetos, chamadas de métodos, tratamento de retornos, entre outras atividades
+° Exemplos:
+    ° Chamadas HTTP e APIs terceiras, como serviçoes de Computação em Nuvem e integração entre sistemas
+    ° bibliotecas ou frameworks no geral que tenham interfaces complexas
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Precisamos enviar dados para uma API terceira de detecção de fraude, com dados como Documento do cliente e Total do Pedido
+
+Sobre o Facade
+
+° Propõe que seja criada uma interface simplificada par aum biblioteca, framework ou conjunto complexo de classes
+° Com isso, apesar de ser ter funcionalidades limitadas quando comparado ao acesso direto, ela simplifica o uso das funcionalidades ao conter apenas as necessárias, realizando uma adaptação de interface (opa, Adapter?) quando necessário
+
+- Proxy
+
+O Problema
+
+° Controle de acesso a um objeto
+° Exemplos de operaçoes de controle a um objeto
+    ° Lazy Loading
+    ° Caching
+    ° Autorização
+° Em nosso caso, camos utilizar o seguinte exemplo:
+    ° Precisamos controlar o acesso a lista de clientes bloqueados, obtida de um repositorio
+    ° Porém, temos algumas restrições aqui:
+        ° Para acessar suas informações, precisamos acesso o banco de dados na primeira execução, realizando o caching dos dados
+        ° Além disso, precisamos garantir que o usuário da requisição atual seja de prefil "admin" para poder acessar o objeto
+    ° Se precisarmos realizar essas operaçoes em todos contextos de acesso a essa list, teremos muitas repetição de código
+
+Sobre o Proxy
+
+° Propõe a criação de um objeto Proxy, que controla o acesso ao objeto original
+° O objeto Proxy pode realizar validações e operações antes ou depois do acesso ao objeto original
+° Similiar ao padrão Decorator em sua implementação, mas bem diferente conceitualmente
+    ° O Proxy controla o acesso
+    ° O Decorator estende com novos comportamentos
+
+- Composite
+
+O Problema
+
+° Representar o modelo através de uma estrutura de árvore, fazendo sentido para estruturas hierárquicas, por exemplo
+° Exemplo:
+    ° Funcionarios e hierarquias de cargos em empresas
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Precisamos modelar a estrutura de funcionarios e gerentes, e permitir que calculemos os gastos corporativos deles. No caso de um gerente, o gasto deverá ser o dele próprio + o da sua equipe
+
+Sobre o Composite
+
+° Padrão estrutural que permite modelar objetos em uma estrutura de árvore
+° É composto:
+    ° Componente (a interface dos itens da arvore)
+    ° Folha (estrutra simples que realiza trabalho)
+    ° Composite (estrutra mais complexa que contém um conjunto de Componentes, que podem ser Folha ou outros Composites)
+
+- Bridge
+
+O Problema
+
+° Hierarquias complexas de classes relacionadas que tornam a extensão delas e suas combinações uma tarefa complexa
+° Em nosso caso, vamos utilizar o seguinte exemplo
+    ° Temos 2 tipos de itens em um mercado: Produto e complexidade
+    ° Cada produto ou comida pode varias em uma unidade de medida, podendo ser por Kg ou quantidade
+    ° Para isso, acabamos criando 4 classes: ProdutoPorKg, ProdutoPorQuantidade, ComidaPorKg, ComidaPorQuantidade
+° Se for adicionar uma nova unidade de medida (como Litro), vai acabar tendo que cirar um para cada tipo de produto, tornando a hierarquia de classes mais complexa e pouco flexível
+° Em resumo: existem diversos tipos de itens, e os itens podem utilizar uma de diversar unidades de medida
+    ° São duas caracteristicas independentes, mas que podem gerar codigo complexo (com muitos condificionais) ao passo que crescem suas combinações
+
+
+Sobre o Bridge
+
+° Permite simplificar hierarquia de classes em complexas
+° Ao invés de criar classes que representam cada uma das diferentes combinações, um Item pode utilizar uma interface de Unidade, que poderá ter as implementações dos seus diferentes tipos
+° Logo, teríamos as hierarquias:
+    ° Item
+    ° Unidade
+° Com isso, respeitamos o Open-Closed Principle (OCP) do SOLID
+
+- Flyweight
+
+O Problema
+
+° Uso grande de memória para alocação de objetos que contém dados comuns entre as requisições
+° Exemplos:
+    ° Componentes de um jogo como caracteristicas de personagens e armas, que não mudam de um usuário para outro
+        ° Caso utilizem instâncias diferentes, muita memória pode ser consumida
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Precisamos retornar um objeto que contpem dados a respeito de formar de pagamento de um pedido tendo como opções:
+        ° Boleto
+        ° Cartão de Crédito
+        ° PayPal
+    ° Como é um objeto frequentemente requisitado, acabamos tendo que criar diversas instâncias, uma para cada requisição ao servidor
+° Isso resulta em impactos na memória disponível
+° Como reduzir a quantidade de objetos criados?
+
+Sobre o Flyweight
+
+° Propõe a criação de uma classe Factory que seria a responsável por garantir que as instâncias de objetos de uso não sejam criadas de maneira desnecessária e repetitiva
+° Vemos aqui uma similiaridade com outro Design Patterns: Singleton
+    ° Enquanto o Singleton se refere a um unico objeto, o Flyweight se refere a varios. Inclusive, o objeto Factory do Flyweight pode ser criado através do padrão Singleton

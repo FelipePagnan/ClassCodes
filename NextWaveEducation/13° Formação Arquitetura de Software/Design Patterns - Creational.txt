@@ -1,0 +1,101 @@
+O que são Design Patterns - Creational
+
+° Design Patterns que lidam com mecanismos de criação de instâncias (objetos)
+° O uso do operador new ao utilizar construtores pode resultar em código menos legível e mais acoplado
+° Tem como objetivo melhorar a maneira de se criar essas instâncias de acordo com a situação específica, reduzindo a complexidade envolvida
+
+° Factory Method
+° Abstract Factory
+° Builder
+° Singleton
+° Prototype
+° Object Pool
+
+° Em algumas situações, você vai ter múltiplas opções de padrões a serem utilizados, como o Prototype e Abstract Factory
+° Geralmente, se inicia utilizando o Factory Method, por ser mais simples de se implementar
+° Dependendo da necesidade, poderá ocorrer o uso de outros padrões como Builder ou Abstract Factory
+° Um padrão descreve um problema comum e descreve uma maneira de resolvê-lo utilizando uma abordagem replicável em diversas situações
+° Um Design Patterns, seguindo o conceito de padrão, descreve uma solução aplicável a problemas comuns encontrados durante implementação
+° Dependendo do contexto, vai necessitar de adaptação em seu uso
+
+- Factory Method
+
+° Lembrete rápido
+    ° Problemas guiam a escolha do Design Patterns, e não o contrário
+    ° Design Patterns não salvam projetos afundados
+    ° Design Patterns são úteis, e pronto. Nada mais do que isso
+
+O Problema
+
+° Uso demasiado de estruturas condicionais para a criação de objetos
+° Seu código precisa utilizar muito estruturas condicionais para decidir qual instância de classe utilizar
+° Exemplos:
+    ° Tipos de notificação (e-mail, SMS, etc)
+° Ou seja, a cada nova classe a ser utilizada, mais uma condicional será adicionada, e a classe ficará maior e complexa
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Temos um startup com um E-Commerce, e processamos pagamentos ao receber pedidos, extraindo os dados e decidindo como proceder
+    ° Porém, temos uma série de complexidades nesse processo em nosso código... O primeiro deles, é que como estamos em grande crescimento, precisamos frequentemente adicionar novos modos de pagamentos
+    ° Atualmente temos suporte aos modos tradicionais de cartao de crédito e boleto
+    ° Mas agora precisamos adicionar PIX e saldo da nossa conta digital, one os clientes podem transferir e deixar rendendo...
+    ° O código atual já está bem complexo, crescndo muita a cada nova forma de pagamento
+
+Sobre o Factory Method
+
+° Disponibiliza uma interface para criar objetos em uma superclasse, o chamado Factory, deixando ela a cargo de decidir o tio de objeto a ser criado
+° A cada novo objetivo a ser inserido na logica da aplicação, a superclasse será atualizada, não impactando os clientes dela
+
+- Abstract Factory
+
+O Problema
+
+° Uso demasiado de estruturas condicionais para a criação de conjuntos de objetos, específicos para cada condição
+° Exemplo:
+    ° Cálculo de diferentes impostos (FGTS, IR) dependendo do salário de funcionario podem virar diferente classes, uma por impostos, mas com implementações específicas para cada fixa
+    ° Cada condicional pode ficar enorme, já que irão instanciar cada classe de cálculo internamente dependendo da faixa de salário
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Ainda com o exemplo da Startup de E-Commerce, surgiu a necesidade de restringir o pagamento e envio dependendo se a compra é internacional ou não
+        ° Se for internacional, o pagamento é so por cartão de crédito
+        ° Se for nacional, o pagamento pode ser feito por cartão ou boleto
+        ° Ambas têm maneira distintas de processar o envio
+    ° Se no futuro quisermos adicionar mais uma condição sobre essa família de objetos relacionado a pagamento e envio (e possivelmente mais!), precisaremos adicionar mais uma condicional, que pode ser tao complexa ou até mais que as outras
+° Disponibiliza uma interface para criar um conjunto de objetos em uma superclasse, o chamado Abstract Factory, deixando a cargo de decidir a familia de objetos a ser criada
+° A cada nova "familia" a ser inserida na lógica da aplicação, a superclasse será atualizada, não impactando os clientes dela
+
+- Builder
+
+O Problema
+
+° Incialização de objetos complexos, que envolvam muitos dados e agrupamentos de objetos
+° Exemplo:
+    ° Montar um objeto de boleto, que contém diversos parâmetros
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Precisamos instanciar um objeto de Boleto
+    ° Ele contém dados de diversos agrupamentos de dados, como Dados de Recebedor, Pagador, além dos próprios dados do boleto, como Nosso Número, Valor do Documento, entre outros
+° Propõe que o código de criação de objeto seja movido para fora da classe
+° São definidos passos para construção do objeto, de maneira a deixar o processo mais legível e simplificado
+° Em alguns cenários será necessario criar diferentes implementações de um Builder, para tipos diferentes de objeto
+
+- Prototype
+
+O Problema
+
+° Criar cópia exata de um objeto, tendo que ir de propriedade a propriedade atribuindo ao novo objeto
+    ° Porém, algumas propriedades/campos podem ser privados o que impossibilita a criação de cópia exata externamente
+    ° Também exige que o contexto do código tenha uma dependência na classe a ser copiada, ja que precisará ligar com ela diretamente
+° Em nosso caso, vamos utilizar o seguinte exemplo:
+    ° Precisamos criar uma copia dos dados do Cliente, em um pedido sendo feito, para trabalhar em um outro contexto sem que a referência atrapalhe
+° Propõe que o código de criação da copia esteja dentro da classe do tipo do objeto a ser clonado
+° Definicação de uma interface para todos objetos que suportam a operação de clonagem
+
+- Singleton
+
+O Problema
+
+° Garantir que uma classe tenha apenas uma única instância
+° Comum de se utilizar com dados que sejam mais estáticos, como configurações
+° Ao invés de sempre instanciar toda vez que for utilizar, seria interessante uma alternativa...
+
+Sobre o Singleton
+
+° Garante que vai existir apenas uma instância de uma classe, fornecendo um ponto de acesso global a ela
+° O framework Web ASP.NET Core contém funcionalidades nativas de injeção de dependência com suporte a tempo de ciclo de vida, incluindo o Singleton
