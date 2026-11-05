@@ -1,0 +1,25 @@
+Componentes Razor
+
+° Um componente é uma parte independente da interface do usuário com lógica de processamento para habilitar um comportamento dinâmico. Os componentes podem ser alinhados, reutilizados, compartilhados entres projeto e usados em aplicativos MVC e Razor Pages
+° Os componentes são implementados usando uma combinação de marcação C# e HTML com a extensão de arquivo .razor
+° O componente Razor processa eventos de ciclo de vida em um conjunto de metodos sincronos e assincronos. Os metodos de ciclo de vida podem ser substituidos para executar operações adicionais nos componentes durante a inicialização e a renderizacao do componente
+
+Metodos
+
+° OnInitialized e OnInitializedAsync
+    - Descrição: Chamado na inicialização do componente
+
+° OnParametersSet e OnParametersSetAsync
+    - Descrição: Chamado quando recebemos parâmetros de componente pai
+
+° OnAfterRender e OnAfterRenderAsync
+    - Chamado no término da renderização do componente
+
+° Dispose e IDiposable
+    - Chamado na descontrução do componente
+
+Eventos de ciclo de vida
+
+O componente Razor processa eventos de ciclo de vida do componente Razor em um conjunto de métodos de
+ciclo de vida síncronos e assíncronos. Os métodos de ciclo de vida podem ser substituídos para executar
+operações adicionais nos componentes durante a inicialização e a renderização do componente.

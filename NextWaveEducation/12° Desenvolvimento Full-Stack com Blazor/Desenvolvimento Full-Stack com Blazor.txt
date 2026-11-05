@@ -1,0 +1,57 @@
+O que aprenderemos?
+
+° O que é Blazor?
+° Render Modes
+° Componentes e seu ciclo de vida
+° Rotas e navegação
+° Formulários
+° Validação de formulários
+° Scaffold de componentes e conexão com banco de dados
+° Desenvolvimento de uma aplicação de Agendamento de consultas, com autenticação e autorização gerenciadas pelo identity
+
+O que pe Blazor?
+
+° O Blazor é um framework para desenvolvimento Web, baseado em HTML, CSS e C# que ajuda voce a criar apliativos Web com mais rapidez. Com o Blazor, crie aplicativos Web usanso componentes reutilizaveis que podem ser executados do cliente e do servidor que possa proporcionar otimas experiencias Web.
+
+Vantagens de utilizar o Blazor
+
+° Escreva codigos C#, o que pode melhorar a produtividade do desenvolvimento e manutenção de aplicativos
+° Aproveite o ecossistema .NET existente das bibliotecas .NET
+° Beneficie-se com o desempenho, confiabilidade e segurança do .NET
+° Produtividade Windows, Linux ou macOS
+
+O que são Render Modes
+
+° Render Modes (modos de renderização), é uma nova feature do Blazor que chegou junto com a versão do .Net 8
+° Com Render Modes, podemos escolher como nossas páginas e componentes serão renderizados
+° Podemos realizar tais configurações nos seguintes niveis:
+    ° Nível de Projeto (Global)
+    ° Nível de página
+    ° Nível de componente
+
+MODOS DE RENDERIZAÇÃO
+
+° Servidor Estático
+    - Descrição: Renderização do lado do servidor estática (SSR estática)
+    - Local de renderização: Servidor
+    - Interativo: Não
+
+° Servidor Interativo
+    - Descrição: Renderização: Renderização interativa do lado do servidor (SSR interativo) usando Blazor Server
+    - Local de renderização: Servidor
+    - Interativo: Sim
+
+° WebAssembly Interativo
+    - Descrição: Renderização interativa do lado do cliente (CSR) usando WebAssembly.
+    - Local de renderização: Cliente
+    - Interativo: Sim
+
+° Auto Interativo
+    - SSR interativa usando Blazor Server inicialmente e em seguida, CSR em visitas subsequentes depois que o pacote blazor é baixado
+    - Local de renderização: Servidor, depois no cliente
+    - Interativo: Sim
+
+Renderização Automática (Auto)
+
+° A Renderização Automática (auto) determina como renderizar o componente em runtime. O componente é inicialmente renderizado do lado do servidor com interatividade utilizando o modelo de hospedagem Blazor Server. O runtime do .Net e as demais dlls são baixados para o cliente em segundo plano e armazenados em cache para que possam ser utilizados em visitas futuras.
+° Os componentes que utilizam o modo de renderização automática devem ser criados a partir de um projeto cliente separado que configure o host Blazor WebAssembly
