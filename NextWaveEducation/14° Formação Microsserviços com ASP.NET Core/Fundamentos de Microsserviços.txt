@@ -1,0 +1,27 @@
+Fundamentos de Microsserviços
+
+
+Monolito
+
+° Aplicação construida como uma unidade única, sendo um executável único
+° Para se realizar uma alteração, é necessário realizar um build da aplicação toda e depois um deploy da versão atualizada
+° É importante entender as diferenças em diversos aspectos em relação aos microsserviços
+° Apresenta alguns defasios, como:
+    ° Manutenção de código, por ser mais propenso ao Big Ball of Mud, situação onde os desenvolvedores não entendem a aplicação completa
+    ° Escalabilidade pode ser um desafio
+    ° Dificuldade de se tornar ágil na parte operacional em ambientes de publicações mais frequentes
+
+Microsserviços
+
+° Serviços pequenos e autônomos que trabalham juntos, e que são coesos e desacoplados
+° Separados por contextos delimitados (ou bounded countexts)
+° É citado no livro Building Microservices, que um microserviço deve ser pequeno o bastante para ser reescrito em 2 semanas, e autônomo para que possa ser alterado e publicado sem afetar outros Serviços
+
+° Além do nome, ele é uma arquitetura distruída. Sendo assim, é importante conhecer os desafios desse tipo de arquitetura
+° desafios
+    ° Integração e consistência dos dados (especialmente em falhas)
+    ° Falhas na rede e na comunicação
+    ° Sobrecarga no gerenciamento (infra)
+
+Microsserviços vs Monolitos
+
