@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    O domínio não referencia nada. Nenhum pacote, nenhum outro projeto.
+    É o que garante que as regras de negócio não dependem de framework:
+    se um dia o Entity Framework ou o MediatR saírem, este projeto não muda.
+  -->
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+</Project>

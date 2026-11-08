@@ -1,0 +1,220 @@
+@host = http://localhost:5000
+@token = COLE_O_TOKEN_AQUI
+
+### Login (pegue o token da resposta e cole em @token acima)
+POST {{host}}/api/autenticacao/login
+Content-Type: application/json
+
+{ "email": "admin@clinicavida.com.br", "senha": "Clinica123" }
+
+### Conferir o token
+GET {{host}}/api/autenticacao/eu
+Authorization: Bearer {{token}}
+
+### ---------------------------- Pacientes ----------------------------
+
+### Listar
+GET {{host}}/api/pacientes
+Authorization: Bearer {{token}}
+
+### Busca livre (nome, CPF ou celular)
+GET {{host}}/api/pacientes?busca=Tavares
+Authorization: Bearer {{token}}
+
+### Busca por CPF
+GET {{host}}/api/pacientes/cpf/529.982.247-25
+Authorization: Bearer {{token}}
+
+### Busca por celular — devolve lista (pai e filha compartilham o número)
+GET {{host}}/api/pacientes/celular/11912345678
+Authorization: Bearer {{token}}
+
+### Ficha com histórico
+GET {{host}}/api/pacientes/1
+Authorization: Bearer {{token}}
+
+### Cadastrar
+POST {{host}}/api/pacientes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Carlos Eduardo Nunes",
+  "cpf": "390.533.447-05",
+  "celular": "(11) 99876-5432",
+  "email": "carlos.nunes@exemplo.com.br",
+  "dataNascimento": "1990-07-23",
+  "sexo": "Masculino"
+}
+
+### Cadastrar com CPF inválido — 400 com os dígitos verificadores
+POST {{host}}/api/pacientes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nomeCompleto": "CPF Errado",
+  "cpf": "111.111.111-11",
+  "celular": "11998765432",
+  "dataNascimento": "1990-01-01",
+  "sexo": "Masculino"
+}
+
+### ----------------------------- Médicos -----------------------------
+
+### Listar
+GET {{host}}/api/medicos
+Authorization: Bearer {{token}}
+
+### Filtrar por especialidade
+GET {{host}}/api/medicos?especialidade=Cardio
+Authorization: Bearer {{token}}
+
+### Buscar por CRM (o número só é único dentro da UF)
+GET {{host}}/api/medicos/crm/SP/123456
+Authorization: Bearer {{token}}
+
+### ----------------------------- Serviços -----------------------------
+
+### Listar
+GET {{host}}/api/servicos
+Authorization: Bearer {{token}}
+
+### Cadastrar com 3 casas decimais — 400
+POST {{host}}/api/servicos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "nome": "Teste Decimal", "valor": 100.005, "duracaoMinutos": 30 }
+
+### --------------------------- Atendimentos ---------------------------
+
+### Agenda de hoje
+GET {{host}}/api/atendimentos/agenda
+Authorization: Bearer {{token}}
+
+### Listar todos
+GET {{host}}/api/atendimentos
+Authorization: Bearer {{token}}
+
+### Agendar (ajuste a data para um dia útil futuro)
+POST {{host}}/api/atendimentos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "pacienteId": 1,
+  "medicoId": 2,
+  "servicoId": 1,
+  "dataHora": "2026-11-10T16:00:00",
+  "observacoes": "Primeira avaliação"
+}
+
+### Conflito de agenda — mesmo médico, horário sobreposto (400)
+POST {{host}}/api/atendimentos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "pacienteId": 2, "medicoId": 2, "servicoId": 1, "dataHora": "2026-11-10T16:15:00" }
+
+### Domingo — 400
+POST {{host}}/api/atendimentos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "pacienteId": 1, "medicoId": 1, "servicoId": 1, "dataHora": "2026-11-15T10:00:00" }
+
+### Confirmar — dispara e-mail com .ics e SMS com link do Google Agenda
+POST {{host}}/api/atendimentos/1/confirmar
+Authorization: Bearer {{token}}
+
+### Remarcar — zera confirmação e lembrete
+PUT {{host}}/api/atendimentos/1/remarcar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "novaDataHora": "2026-11-11T10:00:00" }
+
+### Cancelar com motivo
+POST {{host}}/api/atendimentos/3/cancelar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "motivo": "paciente viajou" }
+
+### Marcar como realizado (só depois do horário)
+POST {{host}}/api/atendimentos/1/realizado
+Authorization: Bearer {{token}}
+
+### ------------------------- Google Agenda -------------------------
+
+### Baixar o convite .ics
+GET {{host}}/api/atendimentos/1/agenda.ics
+Authorization: Bearer {{token}}
+
+### Link do Google Agenda
+GET {{host}}/api/atendimentos/1/link-google-agenda
+Authorization: Bearer {{token}}
+
+### ----------------------------- Anexos -----------------------------
+
+### Adicionar receita (exige atendimento realizado; use o token da médica)
+POST {{host}}/api/atendimentos/1/anexos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "tipo": "Receita",
+  "nomeArquivo": "receita.txt",
+  "conteudo": "Dipirona 500mg - 1 comprimido a cada 8 horas por 3 dias",
+  "descricao": "Receita simples"
+}
+
+### Listar anexos do atendimento
+GET {{host}}/api/atendimentos/1/anexos
+Authorization: Bearer {{token}}
+
+### Filtrar por tipo
+GET {{host}}/api/atendimentos/1/anexos?tipo=Receita
+Authorization: Bearer {{token}}
+
+### Todos os anexos do paciente
+GET {{host}}/api/pacientes/1/anexos
+Authorization: Bearer {{token}}
+
+### Baixar o anexo
+GET {{host}}/api/atendimentos/1/anexos/1/download
+Authorization: Bearer {{token}}
+
+### -------------------------- Notificações --------------------------
+
+### Caixa de saída
+GET {{host}}/api/notificacoes
+Authorization: Bearer {{token}}
+
+### Mensagem completa, com o corpo e o .ics
+GET {{host}}/api/notificacoes/1
+Authorization: Bearer {{token}}
+
+### Rodada de lembretes — chame duas vezes: a segunda devolve zero
+POST {{host}}/api/notificacoes/rodada-de-lembretes
+Authorization: Bearer {{token}}
+
+### ---------------------------- Usuários ----------------------------
+
+### Listar (só administrador)
+GET {{host}}/api/usuarios
+Authorization: Bearer {{token}}
+
+### Perfil Médico sem vínculo — 400
+POST {{host}}/api/usuarios
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "nome": "Sem Vinculo", "email": "sem@clinica.com", "senha": "Clinica123", "perfil": "Medico" }
+
+### Login da médica — a agenda dela só mostra os atendimentos dela
+POST {{host}}/api/autenticacao/login
+Content-Type: application/json
+
+{ "email": "helena@clinicavida.com.br", "senha": "Clinica123" }

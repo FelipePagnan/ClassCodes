@@ -1,0 +1,190 @@
+@host = http://localhost:5000
+
+# Básico II usa autenticação HTTP Basic: o cabeçalho é
+#   Authorization: Basic base64(email:senha)
+#
+# admin@clinicavida.com.br:Clinica123    -> YWRtaW5AY2xpbmljYXZpZGEuY29tLmJyOkNsaW5pY2ExMjM=
+# recepcao@clinicavida.com.br:Clinica123 -> cmVjZXBjYW9AY2xpbmljYXZpZGEuY29tLmJyOkNsaW5pY2ExMjM=
+# helena@clinicavida.com.br:Clinica123   -> aGVsZW5hQGNsaW5pY2F2aWRhLmNvbS5icjpDbGluaWNhMTIz
+
+@admin = Basic YWRtaW5AY2xpbmljYXZpZGEuY29tLmJyOkNsaW5pY2ExMjM=
+@recepcao = Basic cmVjZXBjYW9AY2xpbmljYXZpZGEuY29tLmJyOkNsaW5pY2ExMjM=
+@medica = Basic aGVsZW5hQGNsaW5pY2F2aWRhLmNvbS5icjpDbGluaWNhMTIz
+
+### Quem estou sendo
+GET {{host}}/api/usuarios/eu
+Authorization: {{admin}}
+
+### Sem credencial — 401
+GET {{host}}/api/pacientes
+
+### ---------------------------- Pacientes ----------------------------
+
+### Listar
+GET {{host}}/api/pacientes
+Authorization: {{admin}}
+
+### Busca por CPF
+GET {{host}}/api/pacientes/cpf/529.982.247-25
+Authorization: {{admin}}
+
+### Busca por celular — lista (pai e filha compartilham o número)
+GET {{host}}/api/pacientes/celular/11912345678
+Authorization: {{admin}}
+
+### Ficha com histórico
+GET {{host}}/api/pacientes/1
+Authorization: {{admin}}
+
+### Cadastrar (recepção pode)
+POST {{host}}/api/pacientes
+Authorization: {{recepcao}}
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Carlos Eduardo Nunes",
+  "cpf": "390.533.447-05",
+  "celular": "(11) 99876-5432",
+  "email": "carlos.nunes@exemplo.com.br",
+  "dataNascimento": "1990-07-23",
+  "sexo": "Masculino"
+}
+
+### Médica tentando cadastrar paciente — 403
+POST {{host}}/api/pacientes
+Authorization: {{medica}}
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Nao Deve Passar",
+  "cpf": "390.533.447-05",
+  "celular": "11998765432",
+  "dataNascimento": "1990-01-01",
+  "sexo": "Masculino"
+}
+
+### ----------------------- Médicos e serviços -----------------------
+
+### Listar médicos
+GET {{host}}/api/medicos
+Authorization: {{admin}}
+
+### Buscar por CRM
+GET {{host}}/api/medicos/crm/SP/123456
+Authorization: {{admin}}
+
+### Recepção tentando cadastrar médico — 403
+POST {{host}}/api/medicos
+Authorization: {{recepcao}}
+Content-Type: application/json
+
+{ "nomeCompleto": "Nao Passa", "crm": "555555", "ufCrm": "SP", "especialidade": "Clínica" }
+
+### Listar serviços
+GET {{host}}/api/servicos
+Authorization: {{admin}}
+
+### --------------------------- Atendimentos ---------------------------
+
+### Listar
+GET {{host}}/api/atendimentos
+Authorization: {{admin}}
+
+### Médica vê só a agenda dela
+GET {{host}}/api/atendimentos
+Authorization: {{medica}}
+
+### Agendar (ajuste a data para um dia útil futuro)
+POST {{host}}/api/atendimentos
+Authorization: {{recepcao}}
+Content-Type: application/json
+
+{
+  "pacienteId": 1,
+  "medicoId": 2,
+  "servicoId": 1,
+  "dataHora": "2026-11-10T16:00:00",
+  "observacoes": "Primeira avaliação"
+}
+
+### Conflito de agenda — 400
+POST {{host}}/api/atendimentos
+Authorization: {{recepcao}}
+Content-Type: application/json
+
+{ "pacienteId": 2, "medicoId": 2, "servicoId": 1, "dataHora": "2026-11-10T16:15:00" }
+
+### Confirmar — dispara e-mail com .ics e SMS com link do Google Agenda
+POST {{host}}/api/atendimentos/1/confirmar
+Authorization: {{recepcao}}
+
+### Remarcar
+PUT {{host}}/api/atendimentos/1/remarcar
+Authorization: {{recepcao}}
+Content-Type: application/json
+
+{ "novaDataHora": "2026-11-11T10:00:00" }
+
+### Cancelar com motivo
+POST {{host}}/api/atendimentos/3/cancelar
+Authorization: {{recepcao}}
+Content-Type: application/json
+
+{ "motivo": "paciente viajou" }
+
+### Marcar como realizado
+POST {{host}}/api/atendimentos/1/realizado
+Authorization: {{medica}}
+
+### Baixar o convite .ics
+GET {{host}}/api/atendimentos/1/agenda.ics
+Authorization: {{admin}}
+
+### Link do Google Agenda
+GET {{host}}/api/atendimentos/1/link-google-agenda
+Authorization: {{admin}}
+
+### ----------------------------- Anexos -----------------------------
+
+### Adicionar receita (exige atendimento realizado)
+POST {{host}}/api/atendimentos/1/anexos
+Authorization: {{medica}}
+Content-Type: application/json
+
+{
+  "tipo": "Receita",
+  "nomeArquivo": "receita.txt",
+  "conteudo": "Dipirona 500mg - 1 comprimido a cada 8 horas por 3 dias"
+}
+
+### Listar anexos
+GET {{host}}/api/atendimentos/1/anexos
+Authorization: {{medica}}
+
+### Baixar
+GET {{host}}/api/atendimentos/1/anexos/1/download
+Authorization: {{medica}}
+
+### -------------------------- Notificações --------------------------
+
+### Caixa de saída
+GET {{host}}/api/notificacoes
+Authorization: {{admin}}
+
+### Mensagem completa
+GET {{host}}/api/notificacoes/1
+Authorization: {{admin}}
+
+### Rodada de lembretes — chame duas vezes: a segunda devolve zero
+POST {{host}}/api/notificacoes/rodada-de-lembretes
+Authorization: {{recepcao}}
+
+### ---------------------------- Usuários ----------------------------
+
+### Listar (só administrador)
+GET {{host}}/api/usuarios
+Authorization: {{admin}}
+
+### Recepção tentando listar usuários — 403
+GET {{host}}/api/usuarios
+Authorization: {{recepcao}}
