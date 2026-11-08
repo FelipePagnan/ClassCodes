@@ -25,3 +25,118 @@ Microsserviços
 
 Microsserviços vs Monolitos
 
+° Repositorios
+    ° Microsserviços: Multiplos
+    ° Monolitos: Unico
+
+° Tecnologias
+    ° Microsserviços: Multiplas
+    ° Monolitos: Unica
+
+° Publicacao
+    ° Microsserviços: Multiplos
+    ° Monolitos: Unico
+
+° Single Point of Failure
+    ° Microsserviços: não
+    ° Monolitos: Sim
+
+° Manutenção
+    ° Microsserviços: Dificil
+    ° Monolitos: Facil
+
+° Comunicação
+    ° Microsserviços: Rede
+    ° Monolitos: In-Proces
+
+° Integração
+    ° Microsserviços: Assincrona
+    ° Monolitos: Sincrona
+
+° Consistencia
+    ° Microsserviços: Eventual
+    ° Monolitos: Imediata
+
+° Testabilidade
+    ° Microsserviços: Dificil
+    ° Monolitos: Facil
+
+° Escalabilidade
+    ° Microsserviços: Horizontal
+    ° Monolitos: Vertical
+
+Benefícios da Arquitetura de Microsserviços
+
+- Benefícios
+
+° Otimizado para escalabilidade Horizontal
+° Tolerância a falhas (também reduzindo os Single Point of Failure)
+° Permitir a geterogeneidade de tecnologias
+° Publicações mais rapidas
+° Mais simplicadade da base de código
+
+O que é Domain-Driven Design
+
+- Domain-Driven Design
+
+° Abordagem de desenvolvimento orientado ao dominio do negocio, alinhando a linguagem utilizada nele ao software produzido
+° Termo apresentado por Eric Evans no livro "Domain-Driven-Design: Tackling Complexity in the Heart of Software"
+° NÃO é uma arquitetura, nem reforça uma em especifico
+° É importante não se tornar puritano depois e utilizar os conceitos apredendos como uma bala de prata. Exemplo: repositorios para atualizações mais complexas
+° Diversos componentes são citados nos livros, como linguagem Ubiqua, contextos delimitados, repositorios, Entidade, Agregados, Eventos de Dominio, Serviços de Dominio, e Factories
+° O valor principal do Domain-Driven- Design está em modelar software que resolva um problema do negocio, e nao apenas que tenha uma estrutura X ou pastas Y
+° É essencial ter contato com especialistas de negocio, visto que na pratica a teoria é outra, e achismos dificilmente resultam em funcionalidades uteis para seus usuarios
+° Nao buscar o perfeccionismo em uso de padroes. O DDD ataca a complexidade, o inverso do que ocorre muito.
+
+Linguagem Ubiqua
+
+° Também conhecida como Linguagem Onipresente, é um termo usado por Eric Evans para descrever uma linguagem compartilhada pelo time
+° "Time" envolve desenvolvedores, especialistas do dominio, e outros membros
+° É muito comum, infelizmente, do time de desenvolvimento estar alienado aos requisitos do negócio
+° Assim como os requisitos do negocio, a Linguagem Ubiqua está em constante evolução, junto ao entendimento do time do negocio
+° Em dominios mais complexos a importancia dela aumenta mais ainda. Afinal, o DDD é mais recomendado para cenarios desse tipo, como E-Commerces
+
+Entidades
+
+° Identificadas geralmente atraves de substantivos contidos nas descricoes de processos de negocio
+° Contem um identificador unico, e se aceita que sejam atualizados com o tempo sem perder sua identidade
+° A nivel tecnico, é recomendado que tenham seus setters privado, para se ter mais controle de regras de negocio e com ourtos componentes, como os eventos de dominio
+
+Value Objects
+
+° Se diferenciam das entidades ao nao terem um identificador unico
+° Sao Identificados pelos atributos como um todo, nao apenas por um unico
+° Um exemplo famoso é o endereço. Um endereõ é imutavel ele é composto por logradouro, bairro, CEP, etc. Se um desses itens mudarem, estaremos falando de outro endereço completamente diferente
+
+Agregados
+
+° Conjunto ao entidades e Value Objects que representam uma unidade de consistencia. O ponto de entrada é conhecimento como Aggregate Root
+° Para exemplificar, considere o exemplo de Pedido. Um pedido contem itens de pedido, e tambem endereço de entrega e/ou pagamento
+° Os itens e endereço de peido não existem sem o Pedido. Eles dem estar consistentes entre si
+° Em um banco de dados NoSQL orientado a documento, geralmente um agregado vai mapear para uma coleção, ja que é possivel ter objetos internos (tanto entidade quanto value object)
+° Geralmente haverá um repositorio por Agregado, ja que não faz muito sentido poder alterar elementos do agregado diretamente sem passar pelo Aggregate Root
+
+Repositórios
+
+° Padrão utilizado para a realização de operações em coleções, agnostico a tecnologia utilizada
+° Geralmente associado a um Agregado
+° Se indica geralmente que sua interface fique no Core, e sua implementação na Infrastructure
+° Pode servir como uma fronteira entre o Modelo de Persistencia e o de Dominio
+
+Contextos Delimitados
+
+° Mapeia um subdominio para uma solução, contendo pecularidades proprias na linguagem ubiqua para entidades, value objects e outros componentes
+° Um exemplo é o de Cliente. O cliente para um setor de marketing pode ser representado por nome, dados de contato e historico de compras, para o setor de Entregas apenas por seu nome e endereço, e para o setor de Fidelização, apenas pelos seus dadso de compra e contato
+° É comum um contesto delimitado é mapeado para multiplos microsserviços. Isso ocorree bastante com a area de investimentos e produtos bancarios, onde cada tipo contem regras muito diferentes de investimentos, saque e rentabilização
+
+Mapeamento de Contextos
+
+° O mapeamento de contextos auxilia na definição e visualização dos relaciomentos entre contexto delimitados
+° Existem alguns tipos de relaciomentos, como:
+    ° Shared Kernel: Aproveitamento de codigo entre contextos
+    ° Partner: Evolução em conjunto, mas exige mais esforço na parte de gestão
+    ° Customer-Supplier: O Customer (downstream) depende do Supplier (upstream). 
+        Exemplo: Warehouse (U)-Ordem (D)
+    ° Conformist: Um bounded context depende de outro sem ter grande influencia em suas alterações, ficando sujeito a alterações que precisar fazer devido a alterações no bounded context que ele depende. 
+        Exemplo: Registro de boletos
+    ° Anti-Corruption Layer: Adequado para sistemas legados, é uma camada que adapta quaidquer modificações que ocorram no upstream (em que depende), para "blindar" seu contexto.
