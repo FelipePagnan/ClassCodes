@@ -1,0 +1,142 @@
+Comunicacao tradicional
+
+° O jeito tradicional de comunicacao entre sistemas é o que chamado request-response
+° Nele, um cliente (Computador ou aplicacao), realizada uma requisicao, e o servidor response com os dados pedidos
+° Enquanto o servidor tiver capacidade de responder as requisicoes, esse modelo atende muito bem
+° Porem, se o volume de trafego aumenta muito, ele pode rapidamente se tornar um gargalo
+° Se o sistema falhar sob uma alta carga de requisicoes, ou mesmo tiver uma falha interna, o fluxo de comunicacao vai falhar e parar
+° Imagine uma rede de dependenvia entre servicos envolvendo ele diretamente. Requesições vao resultar em timeout se nao forem tratadas, e isso pode cascadear
+
+Event-Driven Architecture
+
+° Arquitetura de Software onde a estrutura basica é composta por (relacionados a eventos)
+    ° Captura
+    ° Comunicacao
+    ° Processamento
+    ° Persistencia
+° Um evento, derivado do mesmo nome do DDD, é uma ocorrencia significativa do sistema, como uma alteração do estado
+° Muitas aplicações modernas sao orientedas a eventos. Entre os seus beneficios estao:
+    ° Maior resiliencia
+    ° Menor acoplamento
+    ° Maior facilidade de integracao em questoes do esforço de desenvolvimento (ao inves de comunicacao direta)
+° Desafios
+    ° Tratamento de eventos duplicados
+    ° Alinhamento de fluxos de processamento
+
+° Devido a comunicacao sincrona dificultar a resiliencia em microsservicos (exigindo Retry pettern e circuit Breaker), a assincrona geralmente é preferida
+° Na mensageria, as mensagens (eventos publicados), que contem os dados, sao enviados a um Message Broker, por exemplo que é um intermediario na comunicacao assincrona
+° Um subscriber ou consumer entao retira a mensagem da fila, processando-a. Isso geralmente é acompanhado por  um Ack, ou Acknowledgement, resultando na confirmação para o Message Broker que a mensagem foi processada
+° O Message Broker, entre outras funcoes, gerencia filas e topicos, garante que as mensagens que estao neles sejam entregues
+
+Como notificar clientes
+
+° Outro padrao que é comum de se encontrar é utilizando orientacao a eventos em conjunto com websockets, como no SignalR
+° Neste exemplo, após realizar um requisicao que se espera a atualizacao em breve, o identificador da mensagem poderia ser o Id do objeto (como o do pedido), e o front-end aguardaaria por atualizações
+° Quando o microsservico responsavel processar a mensagem, ele poderia notificar clientes que estejam com conexa com websockets no SignalR
+° Esse é uma maneira de, embora a requisicao ja foi processada, o front-end pode receber notificacoes em tempo real do que esteja ocorrendo no processamento do fluxo
+
+Padrão Outbox
+
+° Um padrao que é frequente de ser utilizado em conjunto com o event-drive arquicture é o Outbox
+° Seu objetivo é garantir consistencia de oporecoes e sua porterior publicacao de mensagem no RabbitMQ, afinal, o Message Broker pode sair do ar
+° Nele, a mensagem a ser publicada é persistida tmbem, e um servico recorrente publicaria ela ide maneira independente
+
+O que é RabbitMQ
+
+° O RabbitMQ está entre os Message Brokers mais populares, e tem uma grande quantidade de bibliotecas oficiais para diversar linguagens/ Frameworks
+° Entre suas principais funcionalidades, estao:
+    ° topicos
+    ° Deadletter queues
+    ° Agendamento de entregas
+    ° Envio em batch (ou lotes)
+    ° Transações
+    ° Deduplicação
+
+° Fila é o principal conceito em mensageria, e representa uma estrutura onde as mensagens são armazenadas e consumidas
+° Entre suas principais caracteristicas, estão:
+    ° Duravel
+    ° Auto-delete
+    ° Exclusiva
+
+° Outros conceitos importantes de se entender sao os de Exchance e Routing Key
+    ° Exchance: Agentes reponsaveis por rotear as mensagens para filas, utilizando atributos de cabeçalho, Routing keys, ou bindings
+    ° Routing Key: funciona como um relacionamento entre um Exchance e uma Fila, descrevendo para qual fila a mensagem deve ser direcionada
+
+Service Discovery
+
+° Baseado no problema apresentado anteriormente, sobre os microsservicos precisarem checer a localizacao dos outros, uma solucao que surgiu foi a de Seervice Discovery
+° Nela, um servico armazena informações sobre outros servicos registrados neles atraves de uma chave e seu endereco
+° Finalmente, atraves dessa chave servicos podem consultar o endereco registrado e realizar a requisicao
+° Um componente essencial do Service Discovery é o Service Registry. Ele é o banco de dados que vai conter esse mapeamento entre chaves e os endereços dos serviços
+° Por conta dessa responsabilidade grande, ele precisa ter alta disponibilidade e estar atualizado
+° Alguns exemplos de ferramentas de Service Discovery são:
+    ° Netflix Eureka
+    ° Consul
+    ° Etc.
+° Existem algumas configurações possiveis de um Service Registry, especificamente para o registro dos servicos
+° Dois padroes são utilizados para isso: o Self-Registration:
+    ° Self-Registration: Cada instancia é responsavelpor se registrar e de-registrar ao service Registry
+    ° Third-Party Registration: Nesse caso, as instancia dos servicos não sao responsaveis pelo registro, e sim outro componente do sistema que lida com isso
+
+Sobre o Consul
+
+° O Hashicorp Consul é uma solucao dde Service Mesh que oferece, entre outras coisas, funcionalidades de:
+    ° Service Discovery
+    ° Health Checking
+    ° Key-Value Store
+° Ele é um sistema distruido e altamente disponivel, e seus principais componentes são:
+    ° Consul Agent: Health checks dos servicos do nó Consul
+    ° Consul Server: Armazena e replica os dados
+
+API Gateway
+
+
+° Um API Gateway é uma ferramenta de gerenciamento de APIs, sendo uma interface entre os clientes e um conjunto de serviços(no nosso caso, especificamente microsservicos)
+° Ele aceita todas requisicoes em sua API, e agrega o resultado de chamandas internas, retornando para o cliente
+° API Gateways possibilitam funcionalidades essenciais para APIs corporativos, como autenticação, rate limiting e estatisticas
+
+° Existem diversas razoes para se utilizar um API Gateway, entre elas:
+    ° Maior segurança e controle sobre sua arquitetura de microsservicos, ao concetrar a autenticacao e permitir o rate limiting
+    ° Muito utilizado em monetizao de APIs, por permitir o gerenciamento das requisicoes e agregar os registro
+    ° Desacoplar as requisicoes dos usuarios dos endereços internos de seus servicos. Com isso, é possovel migrar de sistema, e utilizar o mesmo "contrato" de API
+° As principais tecnologias para API Gateway são:
+    ° Kong
+    ° Ocelot
+    ° WSO²
+    ° Apigee
+    ° Cloud endpoints
+    ° Amazon API Gateway
+    ° Azure API Management
+
+Ocelot
+
+° API Gateway em .NET, focado em arquiteturas de microsservicos ou Orientadas a Servico
+° Entre duas capacidades, estão:
+    ° Roteamento
+    ° Service Discovery com Consul & Eureka
+    ° Authenticacao e Autorizacao
+    ° Caching
+    ° Rate limiting
+    ° Retry
+    ° Logging / Tracing / Correlation
+
+Cache distribuído
+
+° Antes de falar sobre cache distruido, é essencial falar sobre o uso de cache, mesmo que de memoria
+° A cache serve como um armazemento temporario, armazena em memoria, e que auxilia na melhora de desempenho em uma aplicacao
+° Exemplo: requisicao para obter dados de paises, estados e cidade, que sao dados estaveis
+° Mas nao somente é utilizada para dados estaveis, mas tamvem para dados nao tao estaveis mas em situacoes onde se precisa ter maior performance
+° Nesses casos, o cache se torna um segundo banco da aplicacao, servindo requisicoes de dados
+° É essencial pensar na consistencia desses dadso, para que nao sejam alterados no banco de dados por uma parte da aplicacao e fique inconsistente com a cache
+
+Redis
+
+° Cache distruido, que armazena os dados em uma estrutura em memoria. tambem é conhecido por ser um banco de dados NoSQL de chave-valor
+° O seu principal uso é como cache e tambem como banco de dados, este ultimo principalmente utilizado em situações com requisitos altos de performance
+° É reconhecido por sua alta performance por conta de estar na memoria
+° Entre suas funcionalidades, estão:
+    ° Transações
+    ° Replicacao
+    ° Recuperacao de falha
+    ° Mensageria
+    ° Configuração de tempo de expiração dos dados

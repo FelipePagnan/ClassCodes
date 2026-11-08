@@ -1,0 +1,80 @@
+Camada Core
+
+° Também chamada de Domain, é a camada central da aplicação, onde não deveria ter dependências entre outros projetos
+° Seus principais componentes são (relcionado com DDD):
+    ° Entities
+    ° ValueObjects
+    ° Repositories (interfaces)
+    ° Enums
+    ° Serviços de dominio
+    ° Eventos dominio
+
+Camada Infrastructure
+
+° É aqui onde são implementadas as integrações com componentes da infra-estrutura ou outros sistemas, como banco de dados, APIs externas, sistemas legados, serviços de Cloud, etc
+° Seus principais componentes são:
+    ° Implementações de Repositorios
+    ° Serviços de Integração com outros sistemas
+    ° Serviços de integração Cloud
+    ° Serviços de integração com Message brokers
+    ° DTOs relacionados aos serviços acima
+
+Camada Application
+
+° É aqui onde são implementados os casos uso da aplicação, envolvendo os modelos de dados que a aplicação recebe do usuário/mundo exterior
+° Seus principais componentes são:
+    ° Serviços de aplicação (geralmente 1.1 para funcionalidades)
+    ° Commands e Queries (se utilizar o padrão CQRS)
+    ° Modelos de entrada e saida (DTOs)
+    ° Subscribers/ Consumers de eventos
+
+Camada Web/API
+
+° É aqui onde outros sistemas se integram com a aplicação/API. Esses sistemas podem ser front-end, desktop ou mesmo outras APIs
+° Seus principais componentes são:
+    ° Controllers
+    ° Startup (que orquestra a configuralçai da aplicação)
+
+O que é CQRS
+
+° Sigla para Command Query Responsibility Segregation, é um padrão que separa a responsabilidade de escrita e leitura
+° É um padrão bastante utilizada não somente por promover uso de modelos/bancos de dados diferentes mas por melhorar a legibilidade, testabilidade e manutenção
+° Seus principais componentes são: Commands e Queries, e seus respectivos Handlers
+
+Commands e Queries
+
+Commands
+
+° Comandos representam alterações no estado do sistema, sendo nomeados de acordo com a ação realizada pelo usuario
+° Geralmente ficam na camada de Application, já que correspondem a um caso de uso, como AddProduct, RegisterParticipant, DeactivateAccount.
+° Eles contém os modelos de dados da operação, e são então tratados pelos seus respectivos Handlers
+
+Queries
+
+° Consultas representam... consultas no sistema, ou seja, supostamente não deveriam alterar o sistema (embora em alguns casos, como registro de data de leitura, alterem o sistema)
+° Geralmente fiam ou na camada de Application, ou na camada de Infrastructure. Isso pode ocorrer pois em alguns casos, a eficiencia na consulta dos dados especificos é mais importante do que o perfeccionismo do padrao
+° Contem os dados de consulta, que sao tratados pelo Handler
+
+Padrão Mediator
+
+° Padrão utilizado para desacoplar classes das que eles dependem diretamente
+° Ao inves de conhecer as regras de instancia de outras, a classe "pediria" ao objeto Mediator para "Entregar" o objeto pedido
+° Este padrão funciona muito bem como o padrão CQRS, ja que cada controoler precisaria delegar o Command ou Query ao seu Handler
+
+Banco de Dados NoSQL
+
+° Banco de dados NoSQL não são tabulares, armazenando dados em modelos diferentes do que as tabelas relacionais
+° Os tipos principais de banco de dados NoSQL são:
+    ° Chave-Valor(Redis)
+    ° Documentos (MongoDB, RavenDB)
+    ° Grafos (Neo4j)
+    ° Orientados a colunas (Cassandra)
+
+MongoDB
+
+° Banco de dados NoSQL orientado a documentos, com um formato semelhante ao JSON (chamado de BSON)
+° Os documentos são armazenados em coleções (collections), o que seria analogo as tabelas em banco de dados relacionais
+° É um banco de dados de alta performance, e por ter suporte a objetos relacionados, facilita a modelagem de dados
+° O pacote oficial para .NET é o MongoDB.Driver, de facil utilizaçao
+° É possivel armazenar um Agregado completo como documento, por ele ter suporte a objetos relacionados
+° A chave primaria de um documento é o campo _id (por convenção a propriedade Id da classe é usada), e atualizações sao feitas no objeto inteiro
