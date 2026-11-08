@@ -1,0 +1,18 @@
+Paginar dados
+- Construindo uma experiência melhor na visualização e busca em muitos registros
+- Diminui a carga no servidor ao tratar requisições
+- Diminui a carga no front-end ao receber e gerenciar coleções muito grandes
+
+Unit Of Work
+- Uma Unit of Work representa um ponto central de transação, que pode envolver
+múltiplas inserções/atualizações/remoções, enfim, alterações no estado do sistema
+- Mesmo o EF Core sendo similar a um Unit Of Work, utilizamos abstrações como
+repositórios de dados. Logo, não podemos usar ele diretamente em nossos métodos
+de casos de uso, surgindo a necessidade de utilizar uma abstração que seja o
+ponto único de transação de nossos Repositórios.
+
+Transações
+- Permite que várias operações do banco de dados seja processada de forma atômica.
+Se a transação der certo, todas operações são aplicadas. Se for revertida,
+nenhuma será aplicada.
+
