@@ -1,0 +1,221 @@
+@host = https://localhost:7001
+
+### Listar livros (3 já vêm semeados)
+GET {{host}}/api/livros
+
+### Buscar livros por título, autor ou editora
+GET {{host}}/api/livros?busca=Tolkien
+
+### Detalhes do livro com avaliações e distribuição de notas
+GET {{host}}/api/livros/1
+
+### Cadastrar livro
+POST {{host}}/api/livros
+Content-Type: application/json
+
+{
+  "titulo": "Clean Architecture",
+  "descricao": "A Craftsman's Guide to Software Structure and Design.",
+  "isbn": "978-0134494166",
+  "autor": "Robert C. Martin",
+  "editora": "Prentice Hall",
+  "genero": "Tecnico",
+  "anoDePublicacao": 2017,
+  "quantidadePaginas": 432
+}
+
+### ISBN duplicado -> 400 Regra de negócio violada
+POST {{host}}/api/livros
+Content-Type: application/json
+
+{
+  "titulo": "Outro livro",
+  "descricao": "Mesmo ISBN do Domain-Driven Design.",
+  "isbn": "9780321125217",
+  "autor": "Alguém",
+  "editora": "Editora",
+  "genero": "Ficcao",
+  "anoDePublicacao": 2020,
+  "quantidadePaginas": 300
+}
+
+### ISBN inválido -> 400 Erro de validação
+POST {{host}}/api/livros
+Content-Type: application/json
+
+{
+  "titulo": "Livro com ISBN ruim",
+  "descricao": "ISBN curto.",
+  "isbn": "123",
+  "autor": "Alguém",
+  "editora": "Editora",
+  "genero": "Ficcao",
+  "anoDePublicacao": 2020,
+  "quantidadePaginas": 300
+}
+
+### Atualizar livro
+PUT {{host}}/api/livros/3
+Content-Type: application/json
+
+{
+  "titulo": "O Hobbit",
+  "descricao": "Edição ilustrada.",
+  "isbn": "978-8595084742",
+  "autor": "J. R. R. Tolkien",
+  "editora": "HarperCollins Brasil",
+  "genero": "Fantasia",
+  "anoDePublicacao": 1937,
+  "quantidadePaginas": 352
+}
+
+### Remover livro
+DELETE {{host}}/api/livros/4
+
+### Enviar imagem de capa (troque o caminho do arquivo)
+POST {{host}}/api/livros/1/capa
+Content-Type: multipart/form-data; boundary=----Limite
+
+------Limite
+Content-Disposition: form-data; name="arquivo"; filename="capa.jpg"
+Content-Type: image/jpeg
+
+< ./capa.jpg
+------Limite--
+
+### Obter imagem de capa
+GET {{host}}/api/livros/1/capa
+
+### Consultar o Google Books por ISBN
+GET {{host}}/api/livros/consulta-externa?isbn=9780132350884
+
+### Consultar o Google Books por termo
+GET {{host}}/api/livros/consulta-externa?termo=clean code
+
+### Consulta externa sem parâmetro -> 400
+GET {{host}}/api/livros/consulta-externa
+
+### Importar livro do Google Books pelo ISBN
+POST {{host}}/api/livros/importar
+Content-Type: application/json
+
+{
+  "isbn": "9780132350884"
+}
+
+### Listar usuários
+GET {{host}}/api/usuarios
+
+### Detalhes do usuário com as avaliações dele
+GET {{host}}/api/usuarios/1
+
+### Cadastrar usuário
+POST {{host}}/api/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Carla Mendes",
+  "email": "carla.mendes@example.com"
+}
+
+### E-mail duplicado -> 400
+POST {{host}}/api/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Outra Ana",
+  "email": "ana.souza@example.com"
+}
+
+### Nome curto -> 400 Erro de validação
+POST {{host}}/api/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Jo",
+  "email": "jo@example.com"
+}
+
+### Atualizar usuário
+PUT {{host}}/api/usuarios/3
+Content-Type: application/json
+
+{
+  "nome": "Carla Mendes Silva",
+  "email": "carla.mendes@example.com"
+}
+
+### Remover usuário com avaliações -> 400
+DELETE {{host}}/api/usuarios/1
+
+### Remover usuário sem avaliações
+DELETE {{host}}/api/usuarios/3
+
+### Listar avaliações de um livro
+GET {{host}}/api/livros/1/avaliacoes
+
+### Cadastrar avaliação (recalcula a nota média do livro)
+POST {{host}}/api/livros/3/avaliacoes
+Content-Type: application/json
+
+{
+  "idUsuario": 1,
+  "nota": 5,
+  "descricao": "Releio todo ano.",
+  "dataInicioLeitura": "2026-10-01",
+  "dataFimLeitura": "2026-10-20"
+}
+
+### Nota 7 -> 400 (nota deve ser de 1 a 5)
+POST {{host}}/api/livros/3/avaliacoes
+Content-Type: application/json
+
+{
+  "idUsuario": 2,
+  "nota": 7,
+  "descricao": "Nota fora da faixa.",
+  "dataInicioLeitura": "2026-10-01",
+  "dataFimLeitura": "2026-10-20"
+}
+
+### Início depois do fim -> 400 (regra de negócio)
+POST {{host}}/api/livros/3/avaliacoes
+Content-Type: application/json
+
+{
+  "idUsuario": 2,
+  "nota": 4,
+  "descricao": "Datas invertidas.",
+  "dataInicioLeitura": "2026-10-20",
+  "dataFimLeitura": "2026-10-01"
+}
+
+### Avaliação duplicada do mesmo usuário -> 400
+POST {{host}}/api/livros/1/avaliacoes
+Content-Type: application/json
+
+{
+  "idUsuario": 1,
+  "nota": 3,
+  "descricao": "Ana já avaliou este livro.",
+  "dataInicioLeitura": "2026-10-01",
+  "dataFimLeitura": "2026-10-20"
+}
+
+### Livro inexistente -> 404
+POST {{host}}/api/livros/999/avaliacoes
+Content-Type: application/json
+
+{
+  "idUsuario": 1,
+  "nota": 4,
+  "descricao": "Livro que não existe.",
+  "dataInicioLeitura": "2026-10-01",
+  "dataFimLeitura": "2026-10-20"
+}
+
+### Relatório de livros lidos no ano corrente
+GET {{host}}/api/relatorios/livros-lidos
+
+### Relatório de livros lidos em 2026
+GET {{host}}/api/relatorios/livros-lidos/2026

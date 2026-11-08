@@ -1,0 +1,128 @@
+@host = https://localhost:7001
+
+### Cadastrar doador apto (com busca de endereço pelo CEP)
+POST {{host}}/api/doadores
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Maria Oliveira",
+  "email": "maria.oliveira@example.com",
+  "dataNascimento": "1995-03-22",
+  "genero": "Feminino",
+  "peso": 62,
+  "tipoSanguineo": "A",
+  "fatorRh": "Positivo",
+  "cep": "01001-000",
+  "complemento": "apto 42"
+}
+
+### Cadastrar doador sem endereço
+POST {{host}}/api/doadores
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Joao da Silva",
+  "email": "joao.silva@example.com",
+  "dataNascimento": "1990-05-10",
+  "genero": "Masculino",
+  "peso": 78,
+  "tipoSanguineo": "O",
+  "fatorRh": "Negativo"
+}
+
+### Cadastrar menor de idade (permitido, mas não poderá doar)
+POST {{host}}/api/doadores
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Pedro Menor",
+  "email": "pedro.menor@example.com",
+  "dataNascimento": "2012-01-15",
+  "genero": "Masculino",
+  "peso": 55,
+  "tipoSanguineo": "B",
+  "fatorRh": "Positivo"
+}
+
+### E-mail duplicado -> 400 Regra de negócio violada
+POST {{host}}/api/doadores
+Content-Type: application/json
+
+{
+  "nomeCompleto": "Outra Maria",
+  "email": "maria.oliveira@example.com",
+  "dataNascimento": "1990-01-01",
+  "genero": "Feminino",
+  "peso": 60,
+  "tipoSanguineo": "A",
+  "fatorRh": "Positivo"
+}
+
+### Listar doadores
+GET {{host}}/api/doadores
+
+### Detalhe do doador com histórico e próxima data permitida
+GET {{host}}/api/doadores/1
+
+### Histórico de doações do doador
+GET {{host}}/api/doadores/1/doacoes
+
+### Registrar doação válida
+POST {{host}}/api/doacoes
+Content-Type: application/json
+
+{
+  "doadorId": 1,
+  "quantidadeML": 450
+}
+
+### Segunda doação logo em seguida -> 400 (intervalo mínimo)
+POST {{host}}/api/doacoes
+Content-Type: application/json
+
+{
+  "doadorId": 1,
+  "quantidadeML": 450
+}
+
+### Quantidade fora da faixa 420-470ml -> 400 (validação)
+POST {{host}}/api/doacoes
+Content-Type: application/json
+
+{
+  "doadorId": 2,
+  "quantidadeML": 500
+}
+
+### Doação de menor de idade -> 400 (regra de negócio)
+POST {{host}}/api/doacoes
+Content-Type: application/json
+
+{
+  "doadorId": 3,
+  "quantidadeML": 450
+}
+
+### Doador inexistente -> 404
+POST {{host}}/api/doacoes
+Content-Type: application/json
+
+{
+  "doadorId": 999,
+  "quantidadeML": 450
+}
+
+### Listar doações
+GET {{host}}/api/doacoes
+
+### Estoque atual
+GET {{host}}/api/estoque
+
+### Tipos com estoque abaixo do mínimo
+GET {{host}}/api/estoque/alertas
+
+### Relatório: total de sangue por tipo
+GET {{host}}/api/relatorios/estoque-por-tipo
+
+### Relatório: doações dos últimos 30 dias
+GET {{host}}/api/relatorios/doacoes-ultimos-30-dias

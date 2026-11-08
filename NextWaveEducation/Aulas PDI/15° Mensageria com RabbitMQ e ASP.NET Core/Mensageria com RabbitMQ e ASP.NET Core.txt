@@ -1,0 +1,178 @@
+O que é Mensageria
+
+° Antes de falar sobre mensageria, é importante enteder sobre a forma de comunicação tradicional, estilo Request-Response
+° Nela, um componente de software realiza uma requisição a um servidor, aguardando a sua resposta
+° Concluido o processamento da requisicao, o servidor retorna a resposta
+° Esse processo funciona muito bem na grande maioria dos cenarios. Porem, em cenarios onde o processamento do servidor tem varias etapas, o tempo de resposta podera ser alto, alem de ser mais vulneravel a falhas em componentes em que o servidor dependa
+° Componentes podem falhar, a rede pode se tornar instavel e falhar, enfim, falhas fazem parte da comunicacao entre componentes de software
+° Com esse cenario, a mensageria se tornou uma execelente alternativa pra comunicacao desacoplada entre componentes
+° Mensageria é uma maneira de permitir a comunicacao entre diferentes sistemas ou componentes de software de forma desacoplada
+° Comunicao desacoplada significa que sistemas podem interagir entre si sem ter conhecimento em do outro, o que contribui para a modularidade e independecia dos componentes
+° Este metodo de comunicacao e essencial em arquiteturas modernas de microsservicos, onde varias aplicacoes precisam se comunicar de forma eficiente e resiliente
+° Essa comunicacao é realizada principalmente atraves do envio de mensagens - pacotes de dados que contem informações
+° Em vez de se comunicarem diretamente uns com os outros, os componentes de software enviam mensagens para uma fila, que é como se fosse uma "caixa de correio"
+° Apos isso, elas continuam seus processos sem esperar uma resposta imediata apos a publicacao da mensagem
+° As mensagens entao sao retiradas por outras aplicacoes, que podem processa-las de acordo com as duas operações e regras de negocio
+
+Beneficios da Mensageria
+
+° Permite que sistemas distruidos sejam desenvolvidos, implantados, e escalados de forma independente
+° Melhora e resilencia do sistema, pois uma falha em um componente nao afeta diretamente os outros
+° Melhora a performance em fluxo de operações com multiplos passos, pois permite que nem todos precisem ser feitos na requisicao inicial
+
+O que é RabbitMQ
+
+° RabbitMQ é uma ferramenta de mensageria open-source bastante popular
+° Possui suporte a varios protocolos de mensageria e que pode ser facilmente conectado a diversos sistemas, incluindo aplicacoes .NET
+° Ele é conhecido por ser leve e facil de publicar tanto on premise quanto na nuvem
+° Tambem suporta requisitos de alta escalabilidade e disponibilidade
+° Finalmente, pode ser executado em diferentes sistemas operacionais e ambientes de nuvem
+° Em uma comunicacao atraves de mensageria, o RabbitMQ atua como intermediaria na troca de mensagens entre os produtores e consumidores
+° O produtor é a aplicacao que recebe e processa essas mensagens
+° Os principais conceitos relacionados ao RabbitMQ são:
+    ° Exchanges
+    ° Filas
+    ° Bindings
+    ° Routing Keys
+° O RabbitMQ oferece diversas funcionalidades, como:
+    ° Roteamente flexivel de mensagens
+    ° Dead Letter Queue
+    ° Confirmação (acknowledgement) de mensagens
+    ° Clusterizacao para alta disponibilidade
+    ° API HTTP, interface de usuario e linh de comando para gerenciamento e monitoramento
+    ° Plugins
+
+Fila
+
+° A Fila é um armazenamento temporario para mensagens que ainda não foram processadas
+° As mensagens sao publicadas para o Exchanges, que entao as redirecionam para a fila correspondente
+    ° Sera discutida mais adiante sobre como funciona isso
+° Os consumidores recebem mensagens das filas, processando as suas informações
+° Ao criar uma fila no RabbitMQ, ha varias propriedades importantes que podem ser definidas. Entre elas, as principais são:
+    ° Durabilidade: Se for true, significa que elas sobreviverão a um reinicio do servidor RabbitMQ e as mensagens não confirmadas serão re-enfileiradas
+    ° Exclusividade: Se for true, significa que a fila será exclusiva, sendo usado por apenas uma conexão e entao exclusiva quando essa conexão for fechada
+    ° Auto-delete: Se for true, ela será automaticamente apagada quando o ultimo consumidor se desconectar
+    ° Message TTL: Se refere ao periodo de tempo que uma mesagem não entregue pode permanecer na fila antes de ser descartada ou movida para outra fila. O valor é especificado em milissegundos
+
+Exchange
+
+° Exchanges são um componente essencial na arquitetura do RabbitMQ
+° Eles recebem mensagens dos produtores e as direcionam para as filas
+° Este direcionamento é baseado emr egras denominadas bindings, que sao estabelicidas entre as exchanges e as filas
+° Os Bindings podem avaliar a Routing Key, que seria um atributo adicionado ao cabeçalho da mensagem, que serve como um "endereco" que o Exchange poderá decidir com rotear a mensagem ao definir o bindings
+° Existem 4 tipos de Exchange
+    ° Direct
+        ° Envia mensagens para uma ou mais fila(s) que o bindings exatamentente encaixa com a routing key
+    ° Default
+        ° É uma exchange do tipo "Direct", sem nome "", que todas filas criadas se registram com a routing key igual ao seu nome
+    ° Topic
+        ° Similar ao Direct, mas oferece bem mais flexibilidade pois permite utilizar padroes de correspondencia com o asterisco (*) e cerquilha (#), não necessitando ter a binding key igual a routing key
+        ° Asterisco representa uma unica palavra qualquer
+        ° Cerquilha representa qualquer numero de palavras
+    ° Fanout
+        ° Copia e roteia todas mensagens recebidas para todas filas que estão registradas na Exchange, independente de routing keys ou padroes definidos
+
+Comparativos entre ferramentas
+
+° RabbitMQ é apenas uma das muitas opcoes disponiveis de ferramentas para mensageria
+° Outras soluções incluem:
+    ° Apache Kafka
+    ° ActiveMQ
+    ° Amazon SQS
+    ° Azure Service Bus
+
+Apache Kafka
+
+° O Apache Kafka, por exemplo, é conhecido por sua alta cpaacidade de taxa de transferencia e cpaacidade de armazenar grandes volumes de dados
+° Isso o torna particulamente adequado para processamento de dados em tempo real
+° Ele também é altamente extensivel e integravel com outros servicos, principalmente atraves de seus conectores
+° No ententa, ele é mais complexo para configurar e gerenciar do que o RabbitMQ
+
+ActiveMQ
+
+° Ja o ActiveMQ é outra opção open-source que oferece suporte para varios protocolos de mensagens
+° Ele tem um longo historico de uso em aplicacoes enterprise e oferece muitos recursos avançados
+° Porem, ele nao tem a mesma performance do RabbitMQ ou do Apache Kafka Quando se trata de lidar com altas cargas de mensagens
+
+Amazon SQS
+
+° O Amazon Simple Queue Service (SQS) é um serviço de fila de mensagens totalmente gerenciado que se integra bem ao ecossistema AWS
+° Ele oferece duas opções principais:
+    ° Filas padrao, que oferece throughput maximo
+    ° Filas FIFO, que preservaam a ordem das mensagens
+° O SQS é simples de configurar e escala facilmente para lidar com altos volumes de mensagens
+° No entanto, em comparação com o RabbitMQ, o SQS é menos flexivel em termos de padroes de roteamento de mensagens
+
+Azure Service Bus
+
+° O Azure Service Bus é a solucao de mensageria da Microsoft para a sua plataforma em nuvem, Azure
+° Oferece recursos como filas, topicos e assinaturas, e suporta variedade de padroes de comunicacao, incluindo publish/subscrive, request/reply e peer-to-peer
+° Assim como SQS, o Azure Service Bus é totalmente gerenciado e se integra bem ao ecossistema Azure
+° Ele tambem suporta padroes de mensageria complexos atraves do uso de topicos e assinaturas
+° No entanto, pode ser mais caro do que o RabbitMQ ou o SQS, dependendo do volume de mensagens
+
+° Ou seja, vale a analise cuidadosa de casa cenario, dos servicos que temos em maos, e os nossos requisitos de taxa de transferencia, integração, e custos
+° Alem disso, a infraestrututa onde temos nosso serviços é um fator importantepara se levar em conta, ja que servicos do mesmo ecossistema podem se concetar de forma bem pratica e eficiente, como por exemplo o Amazon SQS disparando funcoes serverless do AWS Lambda quando uma nova mensagem é recebida
+
+Conhecendo o RabbitMQ.Client
+
+° O RabbitMQ.Client é a biblioteca oficial em .NET para RabbitMQ, mantida pela equipe da propria ferramenta
+° Seu principal beneficio é que ela fornece controle completo sobre o RabbitMQ, oferecendo acesso direto a todos os recursos do RabbitMQsem qualquer abstracao
+° Principais recursos
+    ° Controle Completo:
+        ° Com RabbitMQ.Client, voce tem acesso total a todos os recursos do RabbitMQ, sem as abstracoes que podem limitar sua flexibilidade
+    ° Performance:
+        ° Como uma biblioteca de baixo nivel, RabbitMQ.Client tende a oferecer melhor desempenho do que bibliotecas de mais alto nivel como EasyNetQ.
+            ° Inclusive, esse é um ponto a se avaliar em Comparativos de todo tipo de ferramenta! biblioteca de baixo nivel tendem a terem melhor performance do que bibliotecas de mais alto nivel, que oferecam grandes abstracoes
+    ° Suporte para todos os protocolos RabbitMQ
+        ° RabbitMQ.Client suporta todos os protocolos RabbitMQ, incluindo AMQP 0-9-1, AMQP 1.0 e MQTT
+    ° Manutencao pela equipe do RabbitMQ
+        ° RabbitMQ,Client é mantida pela mesma equipe que mantem o RabbitMQ, o que garante uma boa compatibilidade e suporte
+
+Conhecendo o EasyNetQ
+
+° O EasyNetQ é uma biblioteca open-source para o RabbitMQ
+° A principal caracteristica do EasyNetQ é a simplicacao da interacao com o RabbitMQ, fornecendo uma interface de alto nivel e facil de usuario
+° Com isso, ele esconde muito dos detalhes de implementação que podem tornar o RabbitMQ dificil de gerenciar
+° Porem, é essencial entender que n se deve utilizar esta caracteristica como desculpa para nao se entender como o RabbitMQ funciona
+    ° Isso pode resultar em problemas dificeis de se rastrear e corrigir
+° Principais recursos
+    ° Interface de alto nivel
+        ° Ao oferecer abstracoes e convencoes em cima de RabbitMQ, o EasyNetQ é simples de se utilizar
+    ° Serializacao/ Deserializacao de mensagens
+        ° Realiza essas operações sem a necessidade de que voce o faca manualmente
+    ° Reconexao de consumidor
+        ° Detecta problemas de conexao e reinicia consumidores
+    ° Gerenciamento de erros
+        ° Lida de forma automatica com uma variedade de erros, incluindo falhas de conexao e mensagens mal-formadas
+
+Conhecendo o Padrão Publish-Subscribe
+
+° O Padrão Publish-Subscribe é um padrão de projeto de software que permite que componentes enviem mensagens uns aos outros sem precisar conhecer diretamente quem as recebera
+° Em vez disso, os componentes simplesmente publicam suas mensagens em topico, e outros se inscrevem para recber notificacoes sobre esses topicos.
+° Ele é util em situacoes em que ha dois ou mais objetos que podem estar interessados em receber notificacoes sobre determinados eventos ou atualizacoes de estado em seu sistema.
+° Ele permite que esses objetos se inscrevam para perceber apenas as notificacoes que lhe interessam, ao inves de ter que receber todas as atualizacoes enviadas por um determinado componente
+° Alem disso, o Padrão Publish-Subscribe ajuda a evitar dependencias fortes entre os objetos, pois ele sao precisam conhecer diretamente uns aos outros, resultando em menor acoplamente entre os componentes do sistema
+° Tipos de componentes que podem estar interessado em receber notificacoes:
+    ° Pedido criado
+    ° Usuario bloqueado
+    ° Pagamento confirmado
+    ° Reclamacao aberta
+    ° Funcionario contratado/ cadastrado
+° O Padrão Publish-Subscribe é implementado com a utilizacao de um mediador, que é responsavel por gerenciar a publicacao de mensagens e a inscricao de objetos para receber notificacoes
+° Ele pode ser implementado de varias maneiras, como por exemplo, com a utilizacao de um Message Broker como o RabbitMQ
+
+Conhecendo o MassTransit
+
+° É uma biblioteca para .NET, que oferece uma interface simplificada e integrada para lidar com sistemas de mensagens
+° O MassTransit fornece uma camada de abstracao sobre sistemas de mensagens, permitindo trabalhar com objetos e metodos de alto nivel em seu codigo, sem precisar se preocupar com os detalhes de baixo nivel
+° Tem suporte a RabbitMQ, Azure Service Bus e Amazon SQS
+° Principais recursos
+    ° Interface de alto nivel
+        ° Ao oferecer abstrações e convencoes em cima do RabbitMQ, assim como EasyNetQ, se torna facil definir e publicar mensagens entre servicos, alem de se inscrever para receber mensagens
+    ° Serializacao/Deserializacao de mensagens
+        ° Realiza essas operacoes sem a necessidade de que voce o faca manualmente
+    ° Compatibilidade
+        ° O MassTransit é compativel com varios provedores de mensagens, como o RabbitMQ e Azure Service Bus, o que lhe da flexibilidade para escolher o mais adequado para seu projeto
+    ° Gerenciamento de erros
+        ° Lida de forma automatica com uma variedade de erros, incluindo suporte para reenvio e agendamento de mensagens

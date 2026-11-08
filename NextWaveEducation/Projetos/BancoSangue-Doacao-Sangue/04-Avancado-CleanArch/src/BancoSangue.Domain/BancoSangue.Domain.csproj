@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>BancoSangue.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    A camada de domínio é o centro da Arquitetura Limpa: não referencia
+    nenhum projeto nem nenhuma biblioteca de infraestrutura.
+  -->
+
+</Project>

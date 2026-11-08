@@ -1,0 +1,238 @@
+@host = https://localhost:7001
+
+### Listar caixinhas (3 já vêm semeadas)
+GET {{host}}/api/objetivos
+
+### Filtrar por status
+GET {{host}}/api/objetivos?status=Completo
+
+### Detalhes da caixinha com transações e resumo
+GET {{host}}/api/objetivos/1
+
+### Criar caixinha
+POST {{host}}/api/objetivos
+Content-Type: application/json
+
+{
+  "titulo": "Entrada do apartamento",
+  "quantidadeAlvo": 60000.00,
+  "prazo": "2029-01-15",
+  "quantidadeIdealAporteMensal": 2500.00
+}
+
+### Título duplicado -> 400 Regra de negócio violada
+POST {{host}}/api/objetivos
+Content-Type: application/json
+
+{
+  "titulo": "Viagem para o Japão",
+  "quantidadeAlvo": 5000.00
+}
+
+### Meta com 3 casas decimais -> 400 Erro de validação
+POST {{host}}/api/objetivos
+Content-Type: application/json
+
+{
+  "titulo": "Caixinha com meta inválida",
+  "quantidadeAlvo": 1000.555
+}
+
+### Prazo no passado -> 400 Erro de validação
+POST {{host}}/api/objetivos
+Content-Type: application/json
+
+{
+  "titulo": "Caixinha com prazo vencido",
+  "quantidadeAlvo": 1000.00,
+  "prazo": "2020-01-01"
+}
+
+### Atualizar caixinha
+PUT {{host}}/api/objetivos/1
+Content-Type: application/json
+
+{
+  "titulo": "Viagem para o Japão (2 semanas)",
+  "quantidadeAlvo": 25000.00,
+  "prazo": "2028-05-01",
+  "quantidadeIdealAporteMensal": 1500.00
+}
+
+### Meta menor que o saldo guardado -> 400
+PUT {{host}}/api/objetivos/1
+Content-Type: application/json
+
+{
+  "titulo": "Viagem para o Japão",
+  "quantidadeAlvo": 100.00
+}
+
+### Remover caixinha com saldo -> 400 (saque antes)
+DELETE {{host}}/api/objetivos/1
+
+### Remover caixinha vazia (remoção lógica)
+DELETE {{host}}/api/objetivos/4
+
+### Pausar caixinha
+PATCH {{host}}/api/objetivos/2/pausar
+
+### Retomar caixinha
+PATCH {{host}}/api/objetivos/2/retomar
+
+### Cancelar caixinha
+PATCH {{host}}/api/objetivos/2/cancelar
+
+### Enviar imagem de capa (troque o caminho do arquivo)
+POST {{host}}/api/objetivos/1/capa
+Content-Type: multipart/form-data; boundary=----Limite
+
+------Limite
+Content-Disposition: form-data; name="arquivo"; filename="capa.jpg"
+Content-Type: image/jpeg
+
+< ./capa.jpg
+------Limite--
+
+### Obter imagem de capa
+GET {{host}}/api/objetivos/1/capa
+
+### Listar transações da caixinha
+GET {{host}}/api/objetivos/1/transacoes
+
+### Detalhes de uma transação
+GET {{host}}/api/objetivos/1/transacoes/1
+
+### Extrato com saldo corrido
+GET {{host}}/api/objetivos/1/transacoes/extrato
+
+### Depósito válido (atualiza o ValorTotal na mesma transação de banco)
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 1500.50,
+  "tipo": "Deposito"
+}
+
+### Saque válido
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 200.00,
+  "tipo": "Saque"
+}
+
+### Três casas decimais -> 400 (regra de negócio)
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 100.555,
+  "tipo": "Deposito"
+}
+
+### Valor negativo -> 400 (regra de negócio)
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": -50.00,
+  "tipo": "Deposito"
+}
+
+### Valor zero -> 400
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 0,
+  "tipo": "Deposito"
+}
+
+### Saque acima do saldo -> 400 (saldo insuficiente)
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 999999.00,
+  "tipo": "Saque"
+}
+
+### Data no futuro -> 400
+POST {{host}}/api/objetivos/1/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 100.00,
+  "tipo": "Deposito",
+  "dataTransacao": "2030-12-31"
+}
+
+### Transação em caixinha completa -> 400
+POST {{host}}/api/objetivos/3/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 100.00,
+  "tipo": "Deposito"
+}
+
+### Caixinha inexistente -> 404
+POST {{host}}/api/objetivos/999/transacoes
+Content-Type: application/json
+
+{
+  "quantidade": 100.00,
+  "tipo": "Deposito"
+}
+
+### Remover transação (remoção lógica, ajusta o ValorTotal)
+DELETE {{host}}/api/objetivos/1/transacoes/1
+
+### Simular evolução: 18 meses, aporte 1200, taxa 0,80% ao mês
+POST {{host}}/api/objetivos/1/simular
+Content-Type: application/json
+
+{
+  "aporteMensal": 1200.00,
+  "quantidadeMeses": 18,
+  "taxaJurosMensalPercentual": 0.80
+}
+
+### Simular sem juros (só aportes)
+POST {{host}}/api/objetivos/1/simular
+Content-Type: application/json
+
+{
+  "aporteMensal": 1000.00,
+  "quantidadeMeses": 12,
+  "taxaJurosMensalPercentual": 0
+}
+
+### Simular usando o aporte ideal cadastrado (aporteMensal = 0)
+POST {{host}}/api/objetivos/1/simular
+Content-Type: application/json
+
+{
+  "aporteMensal": 0,
+  "quantidadeMeses": 24,
+  "taxaJurosMensalPercentual": 0.90
+}
+
+### Simular com meses fora da faixa -> 400
+POST {{host}}/api/objetivos/1/simular
+Content-Type: application/json
+
+{
+  "aporteMensal": 1000.00,
+  "quantidadeMeses": 999,
+  "taxaJurosMensalPercentual": 0.80
+}
+
+### Relatório de evolução das caixinhas (6 meses de histórico)
+GET {{host}}/api/relatorios/evolucao
+
+### Relatório com 12 meses de histórico
+GET {{host}}/api/relatorios/evolucao?mesesDeHistorico=12
